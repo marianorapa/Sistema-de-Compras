@@ -1,0 +1,6 @@
+Fecha: 18/11/2020
+
+Cambios:
+
+. Modificación de CARDS quitando el elemento <a>. 
+Incorporación de la función eliminar usuario.
