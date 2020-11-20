@@ -21,12 +21,13 @@ class GestionUsuariosController extends Controller
         return view('/gestionUsuarios/usuarios/consulta',compact('usuarios'));
     }
 
-    public function registro(){
-        return view('/gestionUsuarios/usuarios/registro');
+    public function alta(){
+        return view('/gestionUsuarios/usuarios/alta');
     }
 
     public function store(Request $request){
         $usuario = new User();
+    
         Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:20'],
             'email' => ['required', 'string', 'email', 'max:30', 'unique:users'],
@@ -36,17 +37,32 @@ class GestionUsuariosController extends Controller
         $usuario->name = $request->name;
         $usuario->email = $request->email;
         $usuario->password = Hash::make($request['password']);
+        $usuario->Legajo = $request->legajo;
+        $usuario->RolID = $request->rol;
+        $usuario->Activo = 1;
 
+        //Se guardan los datos en la BD
         $usuario->save();
+
+        //Regresa a la vista anterior
         return redirect()->route('usuario.consulta');
     }
 
     /*
+    Descripción: Eliminación lógica. El método recibe como argumento un objeto usuario que se desea eliminar,
+    actualiza el valor del atributo activo seteando dicho valor a 0, guarda los cambios en la BD
+    y retorna a la vista de consultas.
+    Autor: Maximiliano Robledo
+    Fecha: 19/11/2020
+    Version: 1.0
+    Argumento $usuario
     */
     public function destroy(User $usuario){
-        //return $usuario;
-        $usuario->delete();
+        $usuario->Activo = 0;
+        $usuario->save();
         return redirect()->route('usuario.consulta');
+        //return $usuario;
+        //$usuario->delete();
     }
 
 }

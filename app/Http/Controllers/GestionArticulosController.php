@@ -7,8 +7,8 @@ use App\Models\Articulo;
 
 class GestionArticulosController extends Controller
 {
-    public function registro(){
-        return view('/gestionArticulos/articulos/registroArticulo');
+    public function alta(){
+        return view('/gestionArticulos/articulos/alta');
     }
 
     //Almacena los datos del formulario
@@ -22,6 +22,8 @@ class GestionArticulosController extends Controller
        $articulo->Stock_disponible =$request->stock_disponible+0;
        //Se guardan los datos en la BD
        $articulo->save();
+       //Regresa a la vista de consultas
+       return redirect()->route('articulo.consulta');
     }
 }
 

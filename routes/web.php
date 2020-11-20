@@ -10,6 +10,7 @@ use App\Http\Controllers\GestionProveedoresController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Livewire\UsuarioComponent;
+use App\Http\Livewire\ArticuloComponent;
 
 Route::get('/', function () {
     return view('/auth/login');
@@ -35,7 +36,7 @@ Route::get('/compras', [PageController::class, 'construction'])->name('compras')
 Route::get('/informes', [PageController::class, 'construction'])->name('informes');
 
 //--------Usuarios-------------
-Route::get('/usuarios/alta', [GestionUsuariosController::class, 'registro'])->name('usuario.alta');
+Route::get('/usuarios/alta', [GestionUsuariosController::class, 'alta'])->name('usuario.alta');
 
 //posts
 Route::post('/usuarios', [GestionUsuariosController::class, 'store'])->name('usuario.store');
@@ -76,7 +77,10 @@ Route::get('/sectores/alta',[GestionSectoresController::class,'registro'])->name
 Route::post('/sectores',[GestionSectoresController::class,'store'])->name('sector.store');
 
 //--------Articulos-------------
-Route::get('/articulos/alta', [GestionArticulosController::class, 'registro'])->name('articulo.registro');
+Route::get('/articulos/alta', [GestionArticulosController::class, 'alta'])->name('articulo.alta');
+
+//Components Livewire
+Route::get('/articulos/consulta', ArticuloComponent::class)->name('articulo.consulta'); 
 
 //posts
 Route::post('/articulos',[GestionArticulosController::class,'store'])->name('articulo.store');
@@ -86,3 +90,4 @@ Route::get('/proveedores/alta', [GestionProveedoresController::class, 'registro'
 
 //posts
 Route::post('/proveedores',[GestionProveedoresController::class,'store'])->name('proveedor.store');
+

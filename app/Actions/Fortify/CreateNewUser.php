@@ -3,6 +3,7 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
@@ -18,7 +19,7 @@ class CreateNewUser implements CreatesNewUsers
      * @return \App\Models\User
      */
     public function create(array $input)
-    {
+    {  
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -29,7 +30,10 @@ class CreateNewUser implements CreatesNewUsers
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
-            //'Activo'=>$input['Activo'],
+            'Legajo' => $input['legajo'],
+            'RolID' => $input['rol'],
+            'Activo' => 1,
         ]);
     }
+    
 }

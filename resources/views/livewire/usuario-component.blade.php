@@ -24,52 +24,48 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-blue-50 border-b border-gray-200">
                     <tr class="text-xs font-medium text-gray-500 uppercase text-left">
-                        <th class="px-5 py-3">ID</th>
+                        <th class="px-20 py-3">ID</th>
                         <th class="px-20 py-3">Usuario</th>
                         <th class="px-20 py-3">Email</th>
-                        <th class="px-20 py-3">Activo</th>
                         <th class="px-20 py-3">Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
                     @foreach ($usuarios as $usuario)
-                    <tr>
-                        <td class="px-5">
-                            {{$usuario->id}}
-                        </td>
-                        <td class="px-20">
-                            {{$usuario->name}}
-                        </td>
-                        <td class="px-20">
-                            {{$usuario->email}}
-                        </td>
-                        <td class="px-20">
-                            Si
-                        </td>
-                        {{--
-                        
-                            @@if ({{$usuario->Activo}}==1)
-                        <td class="px-20">
-                            Si
-                        </td>
-                        @else
-                        <td class="px-20">
-                            No
-                        </td>
-                        @endif
-                        --}}
-                    
-                        <td class="px-10 py-2">
-                            <div class="flex items-center justify-end">
-                                <button class="bg-green-500 text-white font-bold px-2 py-1 rounded-lg  hover:bg-green-700">Editar</button>
-                                <form action="{{route('usuario.baja',$usuario)}}" method="POST">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="bg-red-500 text-white font-bold ml-2 px-2 py-1 rounded-lg hover:bg-red-700">Eliminar</button> 
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
+                    @if ( $usuario->Activo == 1 )
+                        <tr>
+                            <td class="px-20">
+                                {{$usuario->id}}
+                            </td>
+                            <td class="px-20">
+                                {{$usuario->name}}
+                            </td>
+                            <td class="px-20">
+                                {{$usuario->email}}
+                            </td>                              
+                            {{--
+                            @if ( $usuario->Activo == 1 )
+                            <td class="px-20">
+                                Si
+                            </td>
+                            @else
+                            <td class="px-20">
+                                No
+                            </td>
+                            @endif
+                            --}}
+                            <td class="px-20 py-2">
+                                <div class="flex items-center justify-start">
+                                    <button class="bg-green-500 text-white font-bold px-2 py-1 rounded-lg  hover:bg-green-700">Editar</button>
+                                    <form action="{{route('usuario.baja',$usuario)}}" method="POST">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="bg-red-500 text-white font-bold ml-2 px-2 py-1 rounded-lg hover:bg-red-700">Eliminar</button> 
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endif
                     @endforeach
                 </tbody>
             </table>

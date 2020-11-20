@@ -18,13 +18,13 @@
                         {{ __('Menu Principal') }}
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link  href="{{ route('configuracion') }}" :active="false">
-                        Configuracion del Sistema
+                    <x-jet-nav-link href="{{ route('compras') }}" :active="false">
+                        Gestion de Compras
                     </x-jet-nav-link>
-                   
-                    <x-jet-nav-link href="{{ route('usuarios') }}" :active="false">
-                        Gestion de Usuarios
-                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="{{ route('inventario') }}" :active="false">
+                        Gestion de Inventario
+                    </x-jet-nav-link>                                                       
                     
                     <x-jet-nav-link href="{{ route('articulos') }}" :active="false">
                         Gestion de Articulos
@@ -32,18 +32,18 @@
                     
                     <x-jet-nav-link href="{{ route('proveedores') }}" :active="false">
                         Gestion de Proveedores
-                    </x-jet-nav-link>
-                
-                    <x-jet-nav-link href="{{ route('inventario') }}" :active="false">
-                        Gestion de Inventario
-                    </x-jet-nav-link>
-
-                    <x-jet-nav-link href="{{ route('compras') }}" :active="false">
-                        Gestion de Compras
-                    </x-jet-nav-link>
+                    </x-jet-nav-link>                                               
                     
                     <x-jet-nav-link href="{{ route('informes') }}" :active="false">
                         Listas e Informes
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link href="{{ route('usuarios') }}" :active="false">
+                        Gestion de Usuarios
+                    </x-jet-nav-link>
+
+                    <x-jet-nav-link  href="{{ route('configuracion') }}" :active="false">
+                        Configuracion del Sistema
                     </x-jet-nav-link>
 
                 </div>

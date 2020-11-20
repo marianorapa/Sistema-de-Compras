@@ -22,10 +22,12 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             //$table->foreignId('current_team_id')->nullable();
             $table->text('profile_photo_path')->nullable();
-            $table->timestamps();
-            //$table->integer('Activo');
-            $table->Integer('Legajo');
+            $table->timestamps(); 
+            $table->integer('Legajo');
             $table->foreign('Legajo')->references('Legajo')->on('personas');
+            $table->string('RolID');
+            $table->foreign('RolID')->references('RolID')->on('roles');
+            $table->integer('Activo')->default(0);
         });
     }
 

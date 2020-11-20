@@ -1,0 +1,34 @@
+Fecha: 19/11/2020
+Cambios:
+
+. Cards Proveedores -> Recomendación W3C
+
+. Cards Articulos -> Recomendación W3C
+
+. Se organiza la barra de navegación por orden de prioridad
+
+. Se incorpora la función de consultas para las siguientes entidades, para 
+ello para cada entidad se crea el componente Livewire en la carpeta app/Livewire/EntidadComponent.php el cual gestiona las consultas.
+	1. Articulos. -> Componente: ArticuloComponent.php
+	
+. FrontEnd alta de Artículos
+
+. Se agregó la FK RolID en la tabla usuarios. Fue necesario modificar el nombre a la table roles para que sea migrada antes que la tabla usuarios.
+
+. Se agregó la FK Legajo en la tabla de usuarios. Fue necesario modificar el nombre a la table personas para que sea migrada antes que la tabla usuarios.
+
+. Se incorporó la eliminación lógica de un usuario.
+
+. Falta:
+ 	.Ingresos de legajos cuando se dan de altas los usuarios
+	.Ingresos de Roles cuando se dan de altas los usuarios
+	.Validar que no se autentique un usuario con eliminación lógica.
+	.Solicitar confirmación antes de eliminar.
+	.Función editar
+	 
+
+
+IMPORTANTE:
+Previo a crear un usuario:
+1. Crear la persona en la BD a la cual se le va a asignar dicho usuario.
+2. Crear los roles en la BD que va a tener el usuario.
