@@ -23,7 +23,11 @@ class GestionProveedoresController extends Controller
        $proveedor->mail =$request->mail;
        $proveedor->Localidad =$request->prov;
        $proveedor->Provincia =$request->loc;
+       
        //Se guardan los datos en la BD
        $proveedor->save();
+
+        //Regresa a la vista de consultas
+        return redirect()->route('proveedor.consulta');
     }
 }

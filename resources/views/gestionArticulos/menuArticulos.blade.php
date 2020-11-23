@@ -5,11 +5,11 @@
         </h2>
     </x-slot>
         
-        <div class="flex flex-wrap justify-center bg-gray-100 ml-64 mr-64 mt-20">
+        <div class="flex flex-wrap justify-center bg-gray-100 ml-64 mr-64 mt-32">
 
             <div class="w-1/3 p-4 bg-gray-100">                
                 <div class="text-gray-700 text-center bg-gray-100 p-4">
-                    <!--Admnistración de Usuarios Cards-->                    
+                    <!--Admnistración de Usuarios Card's-->                    
                     <div class="max-w-sm rounded overflow-hidden shadow-lg pb-10">                        
                         <img class="rounded mx-auto d-block" src="/img/articulos.png" alt="Administración de Usuarios" >
                         <div class="px-6 py-4">

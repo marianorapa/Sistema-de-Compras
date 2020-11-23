@@ -60,7 +60,7 @@ class GestionUsuariosController extends Controller
     public function destroy(User $usuario){
         $usuario->Activo = 0;
         $usuario->save();
-        return redirect()->route('usuario.consulta');
+        return redirect()->route('usuario.consulta')->with('eliminar','ok');
         //return $usuario;
         //$usuario->delete();
     }

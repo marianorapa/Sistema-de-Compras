@@ -44,9 +44,11 @@
                     {{ __('Already registered?') }}
                 </a>
 
+                
                 <x-jet-button class="ml-4">
                     {{ __('Register') }}
                 </x-jet-button>
+                
             </div>
         </form>
     </x-jet-authentication-card>

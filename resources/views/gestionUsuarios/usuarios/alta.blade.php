@@ -53,6 +53,7 @@
                         {{ __('Registrar') }}
                     </x-jet-button>
                 </div>
+              
         </div>
     </div>
 </x-app-layout>

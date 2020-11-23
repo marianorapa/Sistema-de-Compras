@@ -26,11 +26,11 @@
                     <tr class="text-xs font-medium text-gray-500 uppercase text-left">
                         <th class="px-5 py-3">ArticuloID</th>
                         <th class="px-20 py-3">Descripcion</th>
-                        <th class="px-20 py-3">Punto de Pedido</th>
-                        <th class="px-20 py-3">Stock Disponible</th>
+                        <th class="px-20 py-3">Punto de Pedido actual</th>
+                        <th class="px-20 py-3">Stock Disponible</th>              
                         <th class="px-20 py-3">Acciones</th>
                     </tr>
-                </thead>
+                </thead>         
                 <tbody class="divide-y divide-gray-200">
                     @foreach ($articulos as $articulo)
                     <tr>
@@ -46,10 +46,12 @@
                         </td>
                         <td class="px-20">
                             {{$articulo->Stock_disponible}}
-                        </td>            
+                        </td>                            
                         <td class="px-10 py-2">
-                            <div class="flex items-center justify-end">
-                                <button class="bg-green-500 text-white font-bold px-2 py-1 rounded-lg  hover:bg-green-700">Editar</button>
+                            <div class="flex items-center justify-start">
+                                <button class="bg-green-500 text-white font-bold px-2 py-1 rounded-lg mx-2 hover:bg-green-700">Editar</button>
+                                <button class="bg-red-500 text-white font-bold px-2 py-1 rounded-lg  hover:bg-red-700">Eliminar</button>
+
                                 {{--
                                 <form action="{{route('usuario.baja',$usuario)}}" method="POST">
                                     @csrf

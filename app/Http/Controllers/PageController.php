@@ -30,4 +30,12 @@ class PageController extends Controller
         return view('/gestionProveedores/menuProveedores');
     }
 
+    public function gestionInventario(){
+        return view('/gestionInventario/menuInventario');
+    }
+
+    public function gestionCompras(){
+        return view('/gestionCompras/menuCompras');
+    }
+
 }

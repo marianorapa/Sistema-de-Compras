@@ -7,7 +7,7 @@ use App\Models\Articulo;
 
 use Livewire\WithPagination;
 
-class ArticuloComponent extends Component
+class InventarioComponent extends Component
 {
 
     use WithPagination;
@@ -17,25 +17,12 @@ class ArticuloComponent extends Component
     public $search = '';
     public $perPage = '5';
 
-    public $modalFormVisible = false;
-
     public function render()
     {   
-        return view('livewire.articulo-component', [
+        return view('livewire.inventario-component', [
         'articulos'=> Articulo::where('Descripcion', 'LIKE', "%{$this->search}%")
         ->paginate($this->perPage)
         ]);
 
     }
-    
-    /**
-     * Función que muestra el modal
-     *
-     * @return void
-     */
-    public function createShowModal(){
-        $this->modalFormVisible = true;
-    }
-
-
 }

@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Livewire\UsuarioComponent;
 use App\Http\Livewire\ArticuloComponent;
+use App\Http\Livewire\ProveedorComponent;
+use App\Http\Livewire\InventarioComponent;
 
 Route::get('/', function () {
     return view('/auth/login');
@@ -21,19 +23,20 @@ Route::middleware(['auth:sanctum', 'verified'])->get('inicio', function () {
 })->name('dashboard');
 
 //Controlador Principal
-Route::get('/configuracion', [PageController::class, 'construction'])->name('configuracion');
 
-Route::get('/usuarios', [PageController::class, 'gestionUsuarios'])->name('usuarios');
+Route::get('/compras', [PageController::class, 'gestionCompras'])->name('compras');
+
+Route::get('/inventario', [PageController::class, 'gestionInventario'])->name('inventario');
 
 Route::get('/articulos', [PageController::class, 'gestionArticulos'])->name('articulos');
 
 Route::get('/proveedores', [PageController::class, 'gestionProveedores'])->name('proveedores');
 
-Route::get('/inventario', [PageController::class, 'construction'])->name('inventario');
-
-Route::get('/compras', [PageController::class, 'construction'])->name('compras');
-
 Route::get('/informes', [PageController::class, 'construction'])->name('informes');
+
+Route::get('/usuarios', [PageController::class, 'gestionUsuarios'])->name('usuarios');
+
+Route::get('/configuracion', [PageController::class, 'construction'])->name('configuracion');
 
 //--------Usuarios-------------
 Route::get('/usuarios/alta', [GestionUsuariosController::class, 'alta'])->name('usuario.alta');
@@ -77,6 +80,11 @@ Route::get('/sectores/alta',[GestionSectoresController::class,'registro'])->name
 Route::post('/sectores',[GestionSectoresController::class,'store'])->name('sector.store');
 
 //--------Articulos-------------
+//Route::get('/articulos/{ArticuloID}/establecer', [GestionArticulosController::class, 'editar'])->name('articulo.establecer');
+
+Route::put('/articulos/{ArticuloID}/establecer', [GestionArticulosController::class, 'update'])->name('articulo.establecer');
+
+
 Route::get('/articulos/alta', [GestionArticulosController::class, 'alta'])->name('articulo.alta');
 
 //Components Livewire
@@ -88,6 +96,13 @@ Route::post('/articulos',[GestionArticulosController::class,'store'])->name('art
 //--------Proveedores-------------
 Route::get('/proveedores/alta', [GestionProveedoresController::class, 'registro'])->name('proveedor.registro');
 
+//Components Livewire
+Route::get('/proveedores/consulta', ProveedorComponent::class)->name('proveedor.consulta'); 
+
 //posts
 Route::post('/proveedores',[GestionProveedoresController::class,'store'])->name('proveedor.store');
 
+//--------Inventario-------------
+
+//Components Livewire
+Route::get('/inventario/punto_pedido', InventarioComponent::class)->name('inventario.puntopedido');
