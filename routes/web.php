@@ -87,11 +87,15 @@ Route::put('/articulos/{ArticuloID}/establecer', [GestionArticulosController::cl
 
 Route::get('/articulos/alta', [GestionArticulosController::class, 'alta'])->name('articulo.alta');
 
+Route::get('/articulos/vincular_Proveedor', [GestionArticulosController::class, 'vincularProveedorIndex'])->name('articulo.vincularProveedor');
 //Components Livewire
 Route::get('/articulos/consulta', ArticuloComponent::class)->name('articulo.consulta'); 
 
+
 //posts
 Route::post('/articulos',[GestionArticulosController::class,'store'])->name('articulo.store');
+
+Route::post('/articulos',[GestionArticulosController::class,'asignar_Proveedor'])->name('articulo.asignarProveedor');
 
 //--------Proveedores-------------
 Route::get('/proveedores/alta', [GestionProveedoresController::class, 'registro'])->name('proveedor.registro');

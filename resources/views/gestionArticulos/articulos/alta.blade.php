@@ -82,7 +82,6 @@
                         <input type="text" name="stock_disponible">
                     </label>
                     --}}
-                
                     <div class="flex items-center justify-end py-4">
                         <x-jet-button class="block mt-1 w-full">
                             {{ __('Registrar') }}

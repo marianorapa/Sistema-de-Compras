@@ -14,9 +14,12 @@
                         <img class="rounded mx-auto d-block" src="/img/articulos.png" alt="Administración de Usuarios" >
                         <div class="px-6 py-4">
                             <a href="{{ route('articulo.consulta') }}" class="btn btn-success  bg-gray-300 text-gray-600 font-bold px-2 py-1 rounded-lg  hover:bg-gray-500 hover:text-white">Administración de Artículos</a>                                                      
+                            
+                        </div>
+                        <div class="px-6 py-4">
+                            <a href="{{ route('articulo.vincularProveedor') }}" class="btn btn-success  bg-gray-300 text-gray-600 font-bold px-2 py-1 rounded-lg  hover:bg-gray-500 hover:text-white">Vincular Proveedor</a>
                         </div>
                     </div>
-                    </a>
                 </div>
             </div>
              

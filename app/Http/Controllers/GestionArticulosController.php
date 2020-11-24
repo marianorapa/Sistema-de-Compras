@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Articulo;
+use App\Models\Articulo_Proveedor;
 
 class GestionArticulosController extends Controller
 {
@@ -14,15 +15,12 @@ class GestionArticulosController extends Controller
     //Almacena los datos del formulario
     public function store(Request $request){
        $articulo = new Articulo();
-    
-       
        $articulo->Descripcion =$request->descripcion;
        $articulo->Tipo_embalaje =$request->tipo_embalaje;
        $articulo->Unidad_medida =$request->unidad_medida;
        $articulo->Unidad_bulto =$request->unidad_bulto+0;
        $articulo->Punto_pedido =$request->punto_pedido+0;
        $articulo->Stock_disponible =$request->stock_disponible+0;
-      
        //Se guardan los datos en la BD
        $articulo->save();
        //Regresa a la vista de consultas
@@ -69,6 +67,24 @@ class GestionArticulosController extends Controller
         $articulo = $articulos[$ArticuloID - 1];
         return $articulo;
    }
+   /**
+    * Funcion que se encarga de Vincular un Proveedor a un Articulo
+    */
+   
+   
+   
+    public function asignar_proveedor(Request $request){
+      $articuloProveedor = new Articulo_Proveedor();
+      $articuloProveedor->ProveedorID =$request->prov_id;
+      $articuloProveedor->ArticuloID =$request->art_id;
+      $articuloProveedor->FechaDesde= date("Y-n-j");// asigana el año, mes y día.
+      //Se guardan los datos en la BD
+      $articuloProveedor->save();
+      return redirect()->route('articulo.vincularProveedor');  
+   }
+   public function vincularProveedorIndex(){
+      return view('/gestionArticulos/articulos/vincularProveedor');
+  }
 
 }
 
