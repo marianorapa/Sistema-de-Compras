@@ -12,7 +12,11 @@ use App\Http\Controllers\PageController;
 use App\Http\Livewire\UsuarioComponent;
 use App\Http\Livewire\ArticuloComponent;
 use App\Http\Livewire\ProveedorComponent;
-use App\Http\Livewire\InventarioComponent;
+use App\Http\Livewire\PuntoPedidoComponent;
+use App\Http\Livewire\AjustarInventarioComponent;
+use App\Http\Livewire\RecepcionArticuloComponent;
+use App\Http\Livewire\VerificarInventarioComponent;
+
 
 Route::get('/', function () {
     return view('/auth/login');
@@ -80,10 +84,9 @@ Route::get('/sectores/alta',[GestionSectoresController::class,'registro'])->name
 Route::post('/sectores',[GestionSectoresController::class,'store'])->name('sector.store');
 
 //--------Articulos-------------
-//Route::get('/articulos/{ArticuloID}/establecer', [GestionArticulosController::class, 'editar'])->name('articulo.establecer');
+Route::put('/articulos/{ArticuloID}/establecer', [GestionArticulosController::class, 'establecer'])->name('articulo.establecer');
 
-Route::put('/articulos/{ArticuloID}/establecer', [GestionArticulosController::class, 'update'])->name('articulo.establecer');
-
+Route::put('/articulos/{ArticuloID}/ajustar', [GestionArticulosController::class, 'ajustar'])->name('articulo.ajustar');
 
 Route::get('/articulos/alta', [GestionArticulosController::class, 'alta'])->name('articulo.alta');
 
@@ -105,4 +108,13 @@ Route::post('/proveedores',[GestionProveedoresController::class,'store'])->name(
 //--------Inventario-------------
 
 //Components Livewire
-Route::get('/inventario/punto_pedido', InventarioComponent::class)->name('inventario.puntopedido');
+Route::get('/inventario/punto_pedido', PuntoPedidoComponent::class)->name('inventario.puntopedido');
+
+//Components Livewire
+Route::get('/inventario/ajuste_inventario', AjustarInventarioComponent::class)->name('inventario.ajusteinventario');
+
+//Components Livewire
+Route::get('/inventario/recepcion_articulo', RecepcionArticuloComponent::class)->name('inventario.recepcionarticulo');
+
+//Components Livewire
+Route::get('/inventario/verificar', VerificarInventarioComponent::class)->name('inventario.verificar');

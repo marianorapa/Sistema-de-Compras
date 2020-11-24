@@ -7,7 +7,7 @@ use App\Models\Articulo;
 
 use Livewire\WithPagination;
 
-class InventarioComponent extends Component
+class VerificarInventarioComponent extends Component
 {
 
     use WithPagination;
@@ -19,10 +19,12 @@ class InventarioComponent extends Component
 
     public function render()
     {   
-        return view('livewire.inventario-component', [
+        return view('livewire.verificarInventario-component', [
         'articulos'=> Articulo::where('Descripcion', 'LIKE', "%{$this->search}%")
+        ->orderBy('Stock_disponible', 'desc')
         ->paginate($this->perPage)
         ]);
 
     }
 }
+
