@@ -1,5 +1,8 @@
 Fecha: 23/11/2020
+
 Cambios:
 
-. Cambios en la función de Establecer Punto de Pedido incorporando un modal
+. Incorporación de la función Ajustar inventario en el módulo de Gestión de Inventario.
+. Incorporación de la función Registrar artículos recibídos en el módulo de Gestión de Inventario.
+. Incorporación de la función Verificar inventario en el módulo de Gestión de Inventario.
 

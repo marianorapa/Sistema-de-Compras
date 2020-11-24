@@ -33,7 +33,7 @@ class GestionArticulosController extends Controller
        * recupera el articulo de la tabla articulos con el ArticuloID enviado y actualiza el campo de
        * punto de pedido del articulo con el valor del nuevo punto de pedido.
        */
-      public function update(Request $request, $ArticuloID){
+      public function establecer(Request $request, $ArticuloID){
         
         $articulo = Articulo::find($ArticuloID);
         $articulo->Punto_pedido = $request->punto_pedido_nuevo;
@@ -45,18 +45,31 @@ class GestionArticulosController extends Controller
         return redirect()->route('inventario.puntopedido');    
        }
 
-     public function edit($ArticuloID){
-        //$articulo = new Articulo();
-        //$articulo = Articulo::find($id);
+    /**
+       * Función que recibe información a través de un post desde un formulario de la vista de inventario,
+       * recupera el articulo de la tabla articulos con el ArticuloID enviado y actualiza el campo de
+       * stock disponible del articulo con el valor recicibo de ajuste.
+       */
+      public function ajustar(Request $request, $ArticuloID){
+        
+         $articulo = Articulo::find($ArticuloID);      
+         $articulo->Stock_disponible += $request->ajuste;
+         
+         //Se guardan los datos en la BD
+         $articulo->save();
 
-        $articulos=Articulo::all();
-        $articulo = $articulos[$ArticuloID - 1];
-
-        return $articulo;
-
-        //Regresa a la vista de punto de pedidro
-        //return redirect()->route('inventario.puntopedido');
-     }
+         /**
+          * Regresa a la vista de ajuste de inventario si se encontraba en ella, de lo contrario regresa
+          * a la vista de recepción de articulos 
+          *
+          */
+         if ($request->ajuste < 0) {
+            return redirect()->route('inventario.ajusteinventario'); 
+         } else {
+            return redirect()->route('inventario.recepcionarticulo'); 
+         }
+              
+        }
 
      /**
       * Función que recibe el id del articulo, lo busca en la tabla de articulos y lo recupera devolviendo
