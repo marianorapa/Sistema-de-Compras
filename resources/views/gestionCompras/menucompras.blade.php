@@ -13,7 +13,7 @@
                     <div class="max-w-sm rounded overflow-hidden shadow-lg pb-10">                        
                         <img class="rounded mx-auto d-block mt-5 mb-5" src="/img/solCompra.png" alt="Solicitudes de Compras" >
                         <div class="px-6 py-4">
-                        <a href="" class="btn btn-success  bg-gray-300 text-gray-600 font-bold px-2 py-1 rounded-lg  hover:bg-gray-500 hover:text-white">Solicitud de Compra</a>                         
+                        <a href="{{route('compras.solicitudes')}}" class="btn btn-success  bg-gray-300 text-gray-600 font-bold px-2 py-1 rounded-lg  hover:bg-gray-500 hover:text-white">Solicitud de Compra</a>                         
                         </div>
                     </div>
                 </div>
