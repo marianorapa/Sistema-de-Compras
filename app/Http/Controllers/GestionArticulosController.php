@@ -7,7 +7,6 @@ use App\Models\Articulo;
 use App\Models\Articulo_Proveedor;
 use App\Models\Proveedor;
 use Livewire\WithPagination;
-use Livewire\Component;
 
 class GestionArticulosController extends Controller
 {
@@ -112,13 +111,15 @@ class GestionArticulosController extends Controller
 
 
    public function vincularProveedor($ArticuloID){
-      $articulo = Articulo::find($ArticuloID);  
+
+      $articulo = Articulo::find($ArticuloID); 
       $proveedores = Proveedor::where('Nombre', 'LIKE', "%{$this->search}%")
       ->orWhere('Razon_social', 'LIKE', "%{$this->search}%")
       ->paginate($this->perPage);  
       return view('/gestionArticulos/articulos/vincularProveedor')
       ->with('articulo',$articulo)
       ->with('proveedores' ,$proveedores);
+   
    }
 
 

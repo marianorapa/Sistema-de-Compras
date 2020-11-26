@@ -6,7 +6,7 @@
 
 <div class="container mx-auto py-2 mt-3">
     <div class="flex items-center justify-center mb-3">
-        {{--<a href="{{route('usuario.alta')}}" class="btn btn-success bg-blue-500 text-white font-bold px-2 py-1 rounded-lg  hover:bg-blue-700">Alta de Usuario</a>--}}
+        <a href="{{route('articulo.alta')}}" class="btn btn-success bg-blue-500 text-white font-bold px-2 py-1 rounded-lg  hover:bg-blue-700">Alta de Artículo</a>
     </div>
     <div class=" bg-white rounded-lg shadow overflow-hidden mx-auto mb-4">
         <div class="flex bg-white px-4 py-3 border-t border-gray-100 sm:px-6">               
@@ -27,6 +27,9 @@
                     <tr class="text-xs font-medium text-gray-500 uppercase text-left">
                         <th class="px-20 py-3">ID</th>
                         <th class="px-20 py-3">Descripción</th>                                                                                       
+                        <th class="px-20 py-3">Punto de Pedido</th> 
+                        <th class="px-20 py-3">Stock</th> 
+                        <th class="px-20 py-3 text-center">Acciones</th> 
                     </tr>
                 </thead>             
                 <tbody class="divide-y divide-gray-200">                           
@@ -37,7 +40,13 @@
                                 </td>
                                 <td class="px-20">
                                     {{$a->Descripcion}}                                    
-                                </td>                                                                                                              
+                                </td> 
+                                <td class="px-20">
+                                    {{$a->Punto_pedido}}                                    
+                                </td>
+                                <td class="px-20">
+                                    {{$a->Stock_disponible}}                                    
+                                </td>                                                                                                             
                                 <td class="px-20 py-2">                                   
                                     <div class="flex items-center justify-end">
                                         <button class="bg-green-500 text-white font-bold px-2 py-1 rounded-lg  hover:bg-green-700">Editar</button>                                            
@@ -45,8 +54,9 @@
                                             <button type="submit" class="bg-red-500 text-white font-bold ml-2 px-2 py-1 rounded-lg hover:bg-red-700">Eliminar</button>
                                             {{--@csrf      --}}
                                             {{--LLamada al metodo delete para que ejecute el POST--}}                                      
-                                            {{--@method('delete')                                                                                            --}}
+                                            {{--@method('delete') --}}
                                         {{--</form>--}}
+                                        <a href="{{route('articulo.vincular',$a->ArticuloID)}}" class="btn btn-success ml-2 bg-blue-500 text-white font-bold px-2 py-1 rounded-lg  hover:bg-blue-700">vincular</a>                                        
                                     </div>
                                 </td>
                             </tr>

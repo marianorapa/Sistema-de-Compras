@@ -29,7 +29,6 @@ class ProveedorComponent extends Component
         $this->path = $this->dir.$this->path;
     }
 
-
     public function render()
     {   
         return view($this->path, [

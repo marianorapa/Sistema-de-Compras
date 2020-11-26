@@ -82,7 +82,7 @@ Route::post('/articulos',[GestionArticulosController::class,'store'])->name('art
 
 Route::post('/articulos/asignarProveedor',[GestionArticulosController::class,'asignarProveedor'])->name('articulo.asignarProveedor');
 
-//Route::get('gestionArticulos/{ArticuloID}/vincular', [GestionArticulosController::class,'vincularProveedor'])->name('articulo.vincular');
+Route::get('gestionArticulos/{ArticuloID}/vincular', [GestionArticulosController::class,'vincularProveedor'])->name('articulo.vincular');
 
 
 
