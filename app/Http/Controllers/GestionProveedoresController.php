@@ -7,8 +7,8 @@ use App\Models\Proveedor;
 
 class GestionProveedoresController extends Controller
 {
-    public function registro(){
-        return view('/gestionProveedores/proveedores/registroProveedor');
+    public function alta(){
+        return view('/gestionProveedores/alta');
     }
 
     //Almacena los datos del formulario
@@ -28,6 +28,6 @@ class GestionProveedoresController extends Controller
        $proveedor->save();
 
         //Regresa a la vista de consultas
-        return redirect()->route('proveedor.consulta');
+        return redirect()->route('gestionProveedores');
     }
 }

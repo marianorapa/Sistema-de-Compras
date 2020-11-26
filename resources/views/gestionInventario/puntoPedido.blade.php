@@ -1,12 +1,12 @@
-<x-slot name="header">
-    <h2 class="font-bold text-xl text-blue-800 leading-tight">
-        {{ __('Registrar Artículos Recibídos') }}
-    </h2>
-</x-slot>
 
+    <x-slot name="header">
+        <h2 class="font-bold text-xl text-blue-800 leading-tight">
+            {{ __('Establecer punto pedido') }}
+        </h2>
+    </x-slot>
 <div class="container mx-auto mt-3">
     <div class="d-flex justify-content-start">
-        <a class="btn btn-danger" href="{{route('inventario')}}" role="button">Atras</a>
+        <a class="btn btn-danger" href="{{route('gestionInventario')}}" role="button">Atras</a>
     </div>
     <div class="container mx-auto mt-3">
         <div class=" bg-white rounded-lg shadow overflow-hidden mx-auto mb-2">
@@ -27,8 +27,8 @@
                         <thead class="bg-blue-50">
                             <tr class="text-xs font-medium text-gray-500 uppercase text-left">
                                 <th scope="col" class="text-center">ID</th>
-                                <th scope="col" class="text-center">Descripción</th>                                
-                                <th scope="col" class="text-center">Stock</th>                                                        
+                                <th scope="col" class="text-center">Descripcion</th>                                
+                                <th scope="col" class="text-center">Punto de Pedido</th>                                                        
                                 <th scope="col" class="text-center">Acción</th>
                             </tr>
                         </thead>         
@@ -42,7 +42,7 @@
                                         {{$articulo->Descripcion}}
                                     </td>                                      
                                     <td class="text-center">
-                                        {{$articulo->Stock_disponible}}                                        
+                                        {{$articulo->Punto_pedido}}                                        
                                     </td>                                                            
                                     <td>
                                         <div class="d-flex justify-content-center">                                                                             
@@ -55,13 +55,13 @@
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLongTitle">Registrar artículos recibídos</h5>
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">Establecer Punto de Pedido</h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                         <div class="modal-body mt-2 mb-2">
-                                                            <form action="{{route('articulo.ajustar', $articulo->ArticuloID)}}" method="POST">
+                                                            <form action="{{route('articulo.establecer', $articulo->ArticuloID)}}" method="POST">
                                                                 @csrf  
                                                                 {{--Directiva Laravel para indicarle que se quiere enviar un formulario por el metodo POST haciendo uso de PATCH --}}
                                                                 @method('put')
@@ -73,16 +73,16 @@
                                                                 <table class="table mb-5">
                                                                     <thead class="thead-dark">
                                                                         <tr>
-                                                                            <th scope="col" class="text-center">Stock actual</th>
-                                                                            <th scope="col" class="text-center">Valor de ajuste</th>                                                               
+                                                                            <th scope="col" class="text-center">Punto de Pedido Actual</th>
+                                                                            <th scope="col" class="text-center">Punto de Pedido Nuevo</th>                                                               
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
                                                                         <tr>
-                                                                            <th class="text-center"><p class="mt-2">{{$articulo->Stock_disponible}}</p></th>
+                                                                            <th class="text-center"><p class="mt-2">{{$articulo->Punto_pedido}}</p></th>
                                                                             <td>
                                                                                 <div class="d-flex justify-content-center">                                                                                
-                                                                                    <x-jet-input class="text-center" id="ajuste"  type="number" name="ajuste" autocomplete="off" min="0" max="100" value="0" autofocus required></x-jet-input>
+                                                                                    <x-jet-input class="text-center" id="punto_pedido_nuevo"  type="number" name="punto_pedido_nuevo" autocomplete="off" min="0" max="100" value="0" autofocus required></x-jet-input>
                                                                                 </div> 
                                                                             </td>                                                                 
                                                                       </tr>                                                                                                                       
@@ -115,7 +115,7 @@
         </div>
     </div>  
 </div>
-    
+
 @livewireStyles
 <!-- CSS --> 
 <!-- Source: https://getbootstrap.com/-->

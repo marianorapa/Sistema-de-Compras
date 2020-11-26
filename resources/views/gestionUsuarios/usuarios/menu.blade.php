@@ -71,6 +71,8 @@
         </div>
    </div>
 
+ 
+
    @livewireScripts
 
    {{--
@@ -124,26 +126,4 @@
     });
     
    </script>
-
-    
-
-{{--
-Swal.fire({
-    title: '¿Estás seguro que deseas eliminar un usuario?',
-    text: "",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Confirmar',
-    cancelButtonText: 'Cancelar'
-    }).then((result) => {
-    if (result.isConfirmed) {
-        /*Swal.fire(
-        'Usuario eliminado',
-        '',
-        'success'                 
-        ) 
-        form.submit();
---}}
 

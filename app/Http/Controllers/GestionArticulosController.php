@@ -5,9 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Articulo;
 use App\Models\Articulo_Proveedor;
+use App\Models\Proveedor;
+use Livewire\WithPagination;
+use Livewire\Component;
 
 class GestionArticulosController extends Controller
 {
+
+   use WithPagination;
+
+   protected $queryString = ['search' => ['except' => '']];
+
+   public $search = '';
+   public $perPage = '8';
+
     public function alta(){
         return view('/gestionArticulos/articulos/alta');
     }
@@ -24,7 +35,7 @@ class GestionArticulosController extends Controller
        //Se guardan los datos en la BD
        $articulo->save();
        //Regresa a la vista de consultas
-       return redirect()->route('articulo.consulta');
+       return redirect()->route('gestionArticulos','menu');
        
     }
 
@@ -83,10 +94,7 @@ class GestionArticulosController extends Controller
    /**
     * Funcion que se encarga de Vincular un Proveedor a un Articulo
     */
-   
-   
-   
-    public function asignar_proveedor(Request $request){
+    public function asignarProveedor(Request $request){
       $articuloProveedor = new Articulo_Proveedor();
       $articuloProveedor->ProveedorID =$request->prov_id;
       $articuloProveedor->ArticuloID =$request->art_id;
@@ -95,9 +103,24 @@ class GestionArticulosController extends Controller
       $articuloProveedor->save();
       return redirect()->route('articulo.vincularProveedor');  
    }
-   public function vincularProveedorIndex(){
+
+   /***
+    * 
+    public function vincularProveedor(){
       return view('/gestionArticulos/articulos/vincularProveedor');
-  }
+   }*/
+
+
+   public function vincularProveedor($ArticuloID){
+      $articulo = Articulo::find($ArticuloID);  
+      $proveedores = Proveedor::where('Nombre', 'LIKE', "%{$this->search}%")
+      ->orWhere('Razon_social', 'LIKE', "%{$this->search}%")
+      ->paginate($this->perPage);  
+      return view('/gestionArticulos/articulos/vincularProveedor')
+      ->with('articulo',$articulo)
+      ->with('proveedores' ,$proveedores);
+   }
+
 
 }
 

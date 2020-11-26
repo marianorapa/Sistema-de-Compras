@@ -13,36 +13,36 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="true">
+                    <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                     <!--"request()->routeIs('dashboard')"-->
                         {{ __('Menu Principal') }}
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="{{ route('compras') }}" :active="false">
+                    <x-jet-nav-link href="{{ route('gestionCompras') }}" :active="request()->routeIs('gestionCompras')">
                         Gestion de Compras
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="{{ route('inventario') }}" :active="false">
+                    <x-jet-nav-link href="{{ route('gestionInventario') }}" :active="request()->routeIs('gestionInventario')">
                         Gestion de Inventario
                     </x-jet-nav-link>                                                       
                     
-                    <x-jet-nav-link href="{{ route('articulos') }}" :active="false">
+                    <x-jet-nav-link href="{{ route('gestionArticulos','menu') }}" :active="request()->routeIs('gestionArticulos')">                    
                         Gestion de Articulos
                     </x-jet-nav-link>
                     
-                    <x-jet-nav-link href="{{ route('proveedores') }}" :active="false">
+                    <x-jet-nav-link href="{{ route('gestionProveedores','menu') }}" :active="request()->routeIs('gestionProveedores')">
                         Gestion de Proveedores
                     </x-jet-nav-link>                                               
                     
-                    <x-jet-nav-link href="{{ route('informes') }}" :active="false">
+                    <x-jet-nav-link href="{{ route('informes') }}" :active="request()->routeIs('informes')">
                         Listas e Informes
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="{{ route('usuarios') }}" :active="false">
+                    <x-jet-nav-link href="{{ route('gestionUsuarios') }}" :active="request()->routeIs('gestionUsuarios')">
                         Gestion de Usuarios
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link  href="{{ route('configuracion') }}" :active="false">
+                    <x-jet-nav-link  href="{{ route('configuracion') }}" :active="request()->routeIs('configuracion')">
                         Configuracion del Sistema
                     </x-jet-nav-link>
 
