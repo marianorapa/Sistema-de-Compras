@@ -12,7 +12,7 @@ use App\Http\Controllers\GestionProveedoresController;
 use App\Http\Livewire\UsuarioComponent;
 use App\Http\Livewire\ArticuloComponent;
 use App\Http\Livewire\ProveedorComponent;
-
+use App\Http\Livewire\SolicitudComprasComponent;
 
 Route::get('/', function () {
     return view('/auth/login');
@@ -107,3 +107,6 @@ Route::get('/gestionInventario/3-{path}', ArticuloComponent::class)->name('inven
 Route::get('/gestionInventario/4-{path}', ArticuloComponent::class)->name('inventario.verificarInventario');
 
 
+
+//Gestion de Compras-----------------------------------------------------------------------------------------
+Route::get('/gestionCompras/solicitudes', SolicitudComprasComponent::class)->name('compras.solicitudes');
