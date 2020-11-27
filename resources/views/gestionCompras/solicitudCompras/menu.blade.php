@@ -5,6 +5,9 @@
 </x-slot>
 
 <div class="container mx-auto mt-3">
+<div class="flex items-center justify-center mb-3">
+            <a href="{{route('compras.solicitudCompra.alta')}}" class="btn btn-success bg-blue-500 text-white font-bold px-2 py-1 rounded-lg  hover:bg-blue-700">Alta de Solicitud de Compra</a>
+        </div>
     <div class="d-flex justify-content-start">
         <a class="btn btn-danger" href="{{route('gestionCompras')}}" role="button">Atras</a>
     </div>

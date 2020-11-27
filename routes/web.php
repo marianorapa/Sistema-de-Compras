@@ -9,6 +9,7 @@ use App\Http\Controllers\GestionSectoresController;
 use App\Http\Controllers\GestionRolesController;
 use App\Http\Controllers\GestionArticulosController;
 use App\Http\Controllers\GestionProveedoresController;
+use App\Http\Controllers\GestionSolicitudComprasController;
 use App\Http\Livewire\UsuarioComponent;
 use App\Http\Livewire\ArticuloComponent;
 use App\Http\Livewire\ProveedorComponent;
@@ -109,4 +110,9 @@ Route::get('/gestionInventario/4-{path}', ArticuloComponent::class)->name('inven
 
 
 //Gestion de Compras-----------------------------------------------------------------------------------------
-Route::get('/gestionCompras/solicitudes', SolicitudComprasComponent::class)->name('compras.solicitudes');
+Route::get('/gestionCompras/solicitudesCompras', SolicitudComprasComponent::class)->name('compras.solicitudes');
+Route::get('/gestionCompras/solicitudesCompras/alta', [GestionSolicitudComprasController::class,'alta'])->name('compras.solicitudCompra.alta');
+Route::get('/gestionCompras/{path}', ArticuloComponent::class)->name('compras.solicitudCompra.alta.articulos');
+/*Route::get('/gestionCompras/solicitudCompras/alta/{solicitudID}', function () {
+    return view('/gestionCompras/solicitudCompras/alta');
+})->name('compras.solicitudCompra.alta.articulos');*/
