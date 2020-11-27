@@ -56,7 +56,7 @@
                                             {{--LLamada al metodo delete para que ejecute el POST--}}                                      
                                             {{--@method('delete') --}}
                                         {{--</form>--}}
-                                        <a href="{{route('articulo.vincular',$a->ArticuloID)}}" class="btn btn-success ml-2 bg-blue-500 text-white font-bold px-2 py-1 rounded-lg  hover:bg-blue-700">vincular</a>                                        
+                                        <a href="{{route('articulo.vincular',$a->ArticuloID)}}" class="btn btn-success ml-2 bg-blue-500 text-white font-bold px-2 py-1 rounded-lg  hover:bg-blue-700">vincular</a>
                                     </div>
                                 </td>
                             </tr>

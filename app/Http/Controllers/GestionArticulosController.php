@@ -113,9 +113,7 @@ class GestionArticulosController extends Controller
    public function vincularProveedor($ArticuloID){
 
       $articulo = Articulo::find($ArticuloID); 
-      $proveedores = Proveedor::where('Nombre', 'LIKE', "%{$this->search}%")
-      ->orWhere('Razon_social', 'LIKE', "%{$this->search}%")
-      ->paginate($this->perPage);  
+      $proveedores = Proveedor::all();
       return view('/gestionArticulos/articulos/vincularProveedor')
       ->with('articulo',$articulo)
       ->with('proveedores' ,$proveedores);
