@@ -86,6 +86,7 @@ Route::get('gestionArticulos/{ArticuloID}/vincular', [GestionArticulosController
 
 
 
+
 //Gestión de Proveedores--------------------------------------------------------------------------------------
 Route::get('/gestionProveedores/{path}', ProveedorComponent::class)->name('gestionProveedores');
 
