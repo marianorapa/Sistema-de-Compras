@@ -1,1 +1,0 @@
-{{$solicitudID->SolicitudCompraID}}

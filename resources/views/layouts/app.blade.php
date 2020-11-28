@@ -15,7 +15,9 @@
         <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" >
-
+        <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.bootstrap4.min.css" >
+         <!-- datatables extension SELECT -->
+        <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
         @livewireStyles
 
         <!-- Scripts -->
@@ -24,7 +26,10 @@
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"> </script>
         <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
-        
+        <script src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.2.6/js/responsive.bootstrap4.min.js"></script>
+         <!-- datatables extension SELECT -->
+         <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
     </head>
 
     <body class="font-sans antialiased">
@@ -43,7 +48,7 @@
                 {{ $slot }}
             </main>
         </div>
-
+        
         @stack('modals')
 
         @livewireScripts

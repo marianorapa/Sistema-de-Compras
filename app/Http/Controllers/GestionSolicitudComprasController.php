@@ -1,27 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Articulo;
 use App\Models\Solicitud_Compras;
-use SolicitudCompras;
+use Illuminate\HTTP\Request;
 
 class GestionSolicitudComprasController extends Controller
 {
-   /* public function index(){
-        return view('/gestionCompras/solicitudCompra/menu');
-    }*/
-
-    //Almacena los datos del formulario
-    public function alta(){
-       $solicitudCompra= new Solicitud_Compras();
-       $solicitudCompra->FechaRegistro=date("Y-n-j");// asigana el año, mes y día.
-       //Se guardan los datos en la BD
-       $solicitudCompra->save();
-
-      $solicitudID= Solicitud_Compras::max('SolicitudCompraID');
-
-      //return redirect()->route('compras.solicitudCompra.alta.articulos','$solicitudID');
-       return view('gestionCompras.solicitudCompras.alta');
+ 
+    public function index(){
+      $solicitudes = Solicitud_Compras::all();
+      return view('/gestionCompras/solicitudCompras/menu')
+      ->with('solicitudes' ,$solicitudes);
+   }
+    public function seleccionarArticulos(){
+       $articulos = Articulo::all();
+       return view('/gestionCompras/solicitudCompras/seleccionarArticulos')
+       ->with('articulos' ,$articulos);
     }
-   
+    public function cantidadArticulos(Request $request){
+      return $request;
+   }
 
 }

@@ -111,9 +111,6 @@ Route::get('/gestionInventario/4-{path}', ArticuloComponent::class)->name('inven
 
 
 //Gestion de Compras-----------------------------------------------------------------------------------------
-Route::get('/gestionCompras/solicitudesCompras', SolicitudComprasComponent::class)->name('compras.solicitudes');
-Route::get('/gestionCompras/solicitudesCompras/alta', [GestionSolicitudComprasController::class,'alta'])->name('compras.solicitudCompra.alta');
-Route::get('/gestionCompras/{path}', ArticuloComponent::class)->name('compras.solicitudCompra.alta.articulos');
-/*Route::get('/gestionCompras/solicitudCompras/alta/{solicitudID}', function () {
-    return view('/gestionCompras/solicitudCompras/alta');
-})->name('compras.solicitudCompra.alta.articulos');*/
+Route::get('/gestionCompras/solicitudesCompras',[GestionSolicitudComprasController::class,'index'] )->name('compras.solicitudCompras');
+Route::get('/gestionCompras/solicitudesCompras/alta_sel_art', [GestionSolicitudComprasController::class,'seleccionarArticulos'])->name('compras.solicitudCompra.selecArticulos');
+Route::post('/gestionCompras/solicitudesCompras/alta_cant_art', [GestionSolicitudComprasController::class,'cantidadArticulos'])->name('compras.solicitudCompra.cantArticulos');
