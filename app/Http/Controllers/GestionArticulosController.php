@@ -93,14 +93,18 @@ class GestionArticulosController extends Controller
    /**
     * Funcion que se encarga de Vincular un Proveedor a un Articulo
     */
-    public function asignarProveedor(Request $request){
-      $articuloProveedor = new Articulo_Proveedor();
-      $articuloProveedor->ProveedorID =$request->prov_id;
-      $articuloProveedor->ArticuloID =$request->art_id;
-      $articuloProveedor->FechaDesde= date("Y-n-j");// asigana el año, mes y día.
-      //Se guardan los datos en la BD
-      $articuloProveedor->save();
-      return redirect()->route('articulo.vincularProveedor');  
+    public function asignarProveedor(Request $request, $articuloID){
+      foreach ($request->ProveedorID as $proveedorID){
+         $articuloProveedor = new Articulo_Proveedor();
+         $articuloProveedor->ProveedorID =$proveedorID;
+         $articuloProveedor->ArticuloID =$articuloID;
+         $articuloProveedor->FechaDesde= date("Y-n-j");// asigana el año, mes y día.
+         //Se guardan los datos en la BD
+         $articuloProveedor->save();
+      }
+
+      //Regresa a la vista de consultas
+      return redirect()->route('gestionArticulos','menu');
    }
 
    /***
