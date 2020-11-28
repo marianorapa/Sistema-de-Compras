@@ -81,7 +81,7 @@ Route::get('/articulos/gestion', [ArticuloComponent::class,'render'])->name('art
 
 Route::post('/articulos',[GestionArticulosController::class,'store'])->name('articulo.store'); 
 
-Route::post('/articulos/asignarProveedor',[GestionArticulosController::class,'asignarProveedor'])->name('articulo.asignarProveedor');
+Route::post('/articulos/{ArticuloID}/asignarProveedor',[GestionArticulosController::class,'asignarProveedor'])->name('articulo.asignarProveedor');
 
 Route::get('gestionArticulos/{ArticuloID}/vincular', [GestionArticulosController::class,'vincularProveedor'])->name('articulo.vincular');
 
