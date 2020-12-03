@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-bold text-xl text-blue-800 leading-tight">
-        {{ __('Vincular Proveedores') }}
+        {{ __('Desvincular Proveedores') }}
     </h2>
   </x-slot>
 
@@ -17,15 +17,16 @@
       </div> 
     </div> 
   </div>
-
-  <form id="frm-example" action={{route('articulo.asignarProveedor',$articulo->ArticuloID)}} method="POST">
+  
+  <form id="frm-example" action={{route('articulo.desasignarProveedor',$articulo->ArticuloID)}} method="POST">
   @csrf 
+  @method('put')
   <div class="d-flex justify-content-center mt-3"> 
-    <button type="submit" class="btn btn-primary">Vincular</button>
+    <button type="submit" class="btn btn-primary">Desvincular</button>
   </div> 
   <div class="container h-auto sm:rounded-md shadow-md mx-auto mt-2 p-3 bg-white">
     <table id="example" class="table table-hover table-bordered" style="width:100%">
-      <p style="text-align:center; color:grey"><i>Seleccione los proveedores a vincular</i></p>
+      <p style="text-align:center; color:grey"><i>Seleccione los proveedores a desvincular</i></p>
           <thead>         
               <tr class="bg-blue-50">
                 <th><input name="select_all" value="1" type="checkbox"></th>  
@@ -47,6 +48,7 @@
         </table>                      
   </div>     
 </form> 
+
 
 </x-app-layout>
 

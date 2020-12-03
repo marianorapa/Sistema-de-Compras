@@ -26,8 +26,9 @@
                         Gestion de Inventario
                     </x-jet-nav-link>                                                       
                     
-                    <x-jet-nav-link href="{{ route('gestionArticulos','menu') }}" :active="request()->routeIs('gestionArticulos')">                    
-                        Gestion de Articulos
+                    {{--<x-jet-nav-link href="{{ route('gestionArticulos','menu2') }}" :active="request()->routeIs('gestionArticulos')">--}}
+                    <x-jet-nav-link href="{{ route('gestionArticulos.menu') }}" :active="request()->routeIs('gestionArticulos')">                    
+                        Gestion de Articulos                        
                     </x-jet-nav-link>
                     
                     <x-jet-nav-link href="{{ route('gestionProveedores','menu') }}" :active="request()->routeIs('gestionProveedores')">

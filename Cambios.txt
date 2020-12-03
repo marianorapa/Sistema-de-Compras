@@ -1,8 +1,13 @@
-Fecha: 23/11/2020
+Fecha: 28/11/2020
 
-Cambios:
+. Incorporación de la función Datatables Bootstrap con la extensión select.
+Fuente: 
+https://www.gyrocode.com/articles/jquery-datatables-checkboxes/comment-page-4/#comments
 
-. Incorporación de la función Ajustar inventario en el módulo de Gestión de Inventario.
-. Incorporación de la función Registrar artículos recibídos en el módulo de Gestión de Inventario.
-. Incorporación de la función Verificar inventario en el módulo de Gestión de Inventario.
+Se incorporó la traducción de idioma a español para las tablas
+Fuente:
+https://datatables.net/forums/discussion/53081/language-is-not-working
 
+
+Fecha: 01/12/2020 y 02/12/2020
+. Se incorporaron las funciones de vincular y desvincular proveedores a articulo.

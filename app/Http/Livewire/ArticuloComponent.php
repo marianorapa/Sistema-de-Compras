@@ -23,7 +23,7 @@ class ArticuloComponent extends Component
         $this->path = $path;
 
         switch($this->path){
-            case "menu":
+            case "menu2":
                 $this->dir = 'gestionArticulos.';
             break;
 

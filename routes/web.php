@@ -69,43 +69,31 @@ Route::post('/sectores',[GestionSectoresController::class,'store'])->name('secto
 
 
 //Gestión de Articulos-----------------------------------------------------------------------------------------------
-Route::get('/gestionArticulos/{path}', ArticuloComponent::class)->name('gestionArticulos');
-
-Route::put('/articulos/{ArticuloID}/establecer', [GestionArticulosController::class, 'establecer'])->name('articulo.establecer');
-
-Route::put('/articulos/{ArticuloID}/ajustar', [GestionArticulosController::class, 'ajustar'])->name('articulo.ajustar');
-
+//Route::get('/gestionArticulos/{path}', ArticuloComponent::class)->name('gestionArticulos');
+Route::get('/gestionArticulos/menu', [GestionArticulosController::class, 'menu'])->name('gestionArticulos.menu');
 Route::get('/articulos/alta', [GestionArticulosController::class, 'alta'])->name('articulo.alta');
-
 Route::get('/articulos/gestion', [ArticuloComponent::class,'render'])->name('articulos.gestion'); 
-
-Route::post('/articulos',[GestionArticulosController::class,'store'])->name('articulo.store'); 
-
-Route::post('/articulos/{ArticuloID}/asignarProveedor',[GestionArticulosController::class,'asignarProveedor'])->name('articulo.asignarProveedor');
-
 Route::get('gestionArticulos/{ArticuloID}/vincular', [GestionArticulosController::class,'vincularProveedor'])->name('articulo.vincular');
-
-
+Route::get('gestionArticulos/{ArticuloID}/desvincular', [GestionArticulosController::class,'desvincularProveedor'])->name('articulo.desvincular');
+Route::put('/articulos/{ArticuloID}/establecer', [GestionArticulosController::class, 'establecer'])->name('articulo.establecer');
+Route::put('/articulos/{ArticuloID}/ajustar', [GestionArticulosController::class, 'ajustar'])->name('articulo.ajustar');
+Route::put('/articulos/{ArticuloID}/desasignarProveedor',[GestionArticulosController::class,'desasignarProveedor'])->name('articulo.desasignarProveedor');
+Route::post('/articulos/{ArticuloID}/asignarProveedor',[GestionArticulosController::class,'asignarProveedor'])->name('articulo.asignarProveedor');
+Route::post('/articulos',[GestionArticulosController::class,'store'])->name('articulo.store'); 
 
 
 //Gestión de Proveedores--------------------------------------------------------------------------------------
 Route::get('/gestionProveedores/{path}', ProveedorComponent::class)->name('gestionProveedores');
-
 Route::get('/proveedores/alta', [GestionProveedoresController::class, 'alta'])->name('proveedor.alta');
-
 Route::get('/proveedores/consulta', ProveedorComponent::class)->name('proveedor.consulta'); 
-
 Route::post('/proveedores',[GestionProveedoresController::class,'store'])->name('proveedor.store');
 
 
 
 //Gestión de Inventario---------------------------------------------------------------------------------------
 Route::get('/gestionInventario/1-{path}', ArticuloComponent::class)->name('inventario.puntoPedido');
-
 Route::get('/gestionInventario/2-{path}', ArticuloComponent::class)->name('inventario.ajustarInventario');
-
 Route::get('/gestionInventario/3-{path}', ArticuloComponent::class)->name('inventario.registrarArticulo');
-
 Route::get('/gestionInventario/4-{path}', ArticuloComponent::class)->name('inventario.verificarInventario');
 
 

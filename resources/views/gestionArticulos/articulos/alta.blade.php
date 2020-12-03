@@ -5,10 +5,16 @@
         </h2>
     </x-slot>
 
-    <div class="w-1/3 h-auto sm:rounded-md mx-auto mt-20 bg-blue-100 shadow-xl">
-        <div class="  bg-blue-50 overflow-hidden shadow-xl sm:rounded-lg px-10 py-5">
+    <div class="container h-auto mx-auto mt-4">
+        <div class="row">
+          <div class="col-4">
+            <a class="btn btn-danger" href="{{route('gestionArticulos.menu')}}" role="button">Atras</a>
+          </div>
+        </div> 
+    </div>
+
+    <div class="container h-auto mt-4 mx-auto bg-blue-50 overflow-hidden shadow-xl sm:rounded-lg">
             <!-- Formulario de Alta-->
-            <div class="container">
                 <form action="{{route('articulo.store')}}" method="POST">
                     <!-- Se agrega @csrf para que se genere un token oculto para este form -->
                     @csrf 
@@ -53,13 +59,11 @@
                         <x-jet-input id="stock_disponible" class="block mt-1 w-36" type="number" name="stock_disponible" min="0" max="999" required/>
                     </div>                    
               
-                    <div class="flex items-center justify-end py-4">
-                        <x-jet-button class="block mt-1 w-full">
-                            {{('Registrar')}}
-                        </x-jet-button>
-                    </div>                   
-                </form>
-            </div>
+                    <div class="d-flex justify-content-center mt-3 mb-3"> 
+                        <button type="submit" class="btn btn-primary">Registrar</button>
+                    </div> 
+                                   
+                </form>          
         </div>
-    </div>
+ 
 </x-app-layout>
