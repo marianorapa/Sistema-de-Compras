@@ -40,7 +40,8 @@
                           </button>
                         </td>
                         <td class="text-center">
-                            <a href="{{route('articulo.vincular',$a->ArticuloID)}}" class="btn btn-outline-info btn-sm">Vincular</a>
+                        <a href="{{route('ruta.prueba2',$a->ArticuloID)}}" class="btn btn-outline-info btn-sm">Vincular</a>
+                            <!--<a href="{{route('articulo.vincular',$a->ArticuloID)}}" class="btn btn-outline-info btn-sm">Vincular</a>-->
                             <a href="{{route('articulo.desvincular',$a->ArticuloID)}}" class="btn btn-outline-danger btn-sm">Desvincular</a>
                         </td>
                     </tr>                                   

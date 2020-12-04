@@ -1,44 +1,46 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-bold text-xl text-blue-800 leading-tight">
-        {{ __('Solicitudes de Compras') }}
+        {{ __('Vincular Proveedores') }}
     </h2>
   </x-slot>
 
   <div class="container h-auto mx-auto mt-4">
     <div class="row">
       <div class="col-4">
-        <a class="btn btn-danger" href="{{route('compras.solicitudCompras')}}" role="button">Atras</a>
+        <a class="btn btn-danger" href="{{route('gestionArticulos.menu')}}" role="button">Atras</a>
       </div>       
       <div class="col-sm-4 overflow-hidden shadow-md sm:rounded-lg bg-white">  
           <h3 class="text-center">Artículo</h3>
-          <p class="text-center">ID Articulo: </p>    
-          <p class="text-center">Descripción:</p> 
+          <p class="text-center">ID Articulo: {{$articulo->ArticuloID}}</p>    
+          <p class="text-center">Descripción: {{$articulo->Descripcion}}</p> 
       </div> 
     </div> 
   </div>
 
-  <form id="frm-example" action={{route('compras.solicitudCompra.cantArticulos')}} method="POST">
+  <form id="frm-example" action={{route('ruta.prueba',$articulo->ArticuloID)}} method="POST">
   @csrf 
   <div class="d-flex justify-content-center mt-3"> 
-    <button type="submit" class="btn btn-primary">Guardar</button>
+    <button type="submit" class="btn btn-primary">Vincular</button>
   </div> 
   <div class="container h-auto sm:rounded-md shadow-md mx-auto mt-2 p-3 bg-white">
     <table id="example" class="table table-hover table-bordered" style="width:100%">
-      <p style="text-align:center; color:grey"><i>Seleccione los articulos a solicitar</i></p>
+      <p style="text-align:center; color:grey"><i>Seleccione los proveedores a vincular</i></p>
           <thead>         
               <tr class="bg-blue-50">
                 <th><input name="select_all" value="1" type="checkbox"></th>  
                 <th class="text-center w-10">ID</th>
-                <th>Descripción</th>                           
+                <th>Proveedor</th>
+                <th>Razón Social</th>                            
               </tr>
           </thead>
           <tbody>
-            @foreach ($articulos as $a) 
+            @foreach ($proveedores as $p) 
               <tr>
                 <td></td>
-                <td class="text-center">{{$a->ArticuloID}}</td>
-                <td>{{$a->Descripcion}}</td>
+                <td class="text-center">{{$p->ProveedorID}}</td>
+                <td>{{$p->Nombre}}</td>
+                <td>{{$p->Razon_social}}</td>  
               </tr>                                   
             @endforeach                  
           </tbody>         
@@ -195,3 +197,9 @@
     });
   
 </script>
+
+
+
+
+
+

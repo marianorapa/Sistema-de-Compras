@@ -15,10 +15,10 @@ class GestionSolicitudComprasController extends Controller
    }
     public function seleccionarArticulos(){
        $articulos = Articulo::all();
-       return view('/gestionCompras/solicitudCompras/seleccionarArticulos')
-       ->with('articulos' ,$articulos);
+       return view('/gestionCompras/solicitudCompras/seleccionarArticulos')->with('articulos' ,$articulos);
     }
-    public function cantidadArticulos(Request $request){
+    
+   public function cantidadArticulos(Request $request){
       return $request;
    }
 
