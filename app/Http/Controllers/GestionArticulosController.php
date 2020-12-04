@@ -121,7 +121,6 @@ class GestionArticulosController extends Controller
 
       //Regresa a la vista de consultas
       return redirect()->route('gestionArticulos.menu');
-     
    }
 
    
@@ -174,17 +173,6 @@ class GestionArticulosController extends Controller
       
    }
 
-   public function funcionpruebarecibir(Request $request, $articuloID){
-      return $request;
-   }
 
-   public function funcionpruebamostrar($ArticuloID){
-      $articulo = Articulo::find($ArticuloID); 
-      $proveedores = Proveedor::all();
-
-      return view('/gestionCompras/vistaPrueba')
-      ->with('articulo',$articulo)
-      ->with('proveedores' ,$proveedores);
-   }
 }
 

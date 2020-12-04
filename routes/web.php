@@ -90,10 +90,6 @@ Route::post('/proveedores',[GestionProveedoresController::class,'store'])->name(
 
 
 
-
-
-
-
 //Gestión de Inventario---------------------------------------------------------------------------------------
 Route::get('/gestionInventario/1-{path}', ArticuloComponent::class)->name('inventario.puntoPedido');
 Route::get('/gestionInventario/2-{path}', ArticuloComponent::class)->name('inventario.ajustarInventario');
@@ -104,11 +100,5 @@ Route::get('/gestionInventario/4-{path}', ArticuloComponent::class)->name('inven
 
 //Gestion de Compras-----------------------------------------------------------------------------------------
 Route::get('/gestionCompras/solicitudesCompras',[GestionSolicitudComprasController::class,'index'] )->name('compras.solicitudCompras');
-Route::get('/gestionCompras/solicitudesCompras/altaSelArt', [GestionSolicitudComprasController::class,'seleccionarArticulos'])->name('compras.solicitudCompra.selecArticulos');
-Route::post('/gestionCompras/solicitudesCompras/altaCantArt',[GestionSolicitudComprasController::class,'cantidadArticulos'])->name('compras.solicitudCompra.cantArticulos');
-
-
-
-
-Route::post('/prueba/{ArticuloID}/',[GestionArticulosController::class,'funcionpruebarecibir'])->name('ruta.prueba');
-Route::get('/prueba/envia', [GestionArticulosController::class,'funcionpruebamostrar'])->name('ruta.prueba2');
+Route::get('/gestionCompras/solicitudesCompras/alta_sel_art', [GestionSolicitudComprasController::class,'seleccionarArticulos'])->name('compras.solicitudCompra.selecArticulos');
+Route::post('/gestionCompras/solicitudesCompras/alta_cant_art', [GestionSolicitudComprasController::class,'cantidadArticulos'])->name('compras.solicitudCompra.cantArticulos');
