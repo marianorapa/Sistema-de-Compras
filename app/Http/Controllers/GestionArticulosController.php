@@ -147,6 +147,7 @@ class GestionArticulosController extends Controller
    public function vincularProveedor($ArticuloID){
       $articulo = Articulo::find($ArticuloID); 
       $proveedores = Proveedor::all();
+   
 
       return view('/gestionArticulos/articulos/vincularProveedor')
       ->with('articulo',$articulo)

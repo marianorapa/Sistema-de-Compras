@@ -31,7 +31,7 @@
                         <td class="text-center">{{$a->Stock_disponible}}</td>  
                         <td class="text-center">
                           <!-- Boton trigger modal eliminar -->
-                          <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modalEditar" data-descripcion="{{$a->Descripcion}}">
+                          <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modalEditar" data-descripcion="{{$a->Descripcion}}" data-stock="{{$a->Stock_disponible}}">
                             Editar
                           </button>
                           <!-- Boton trigger modal eliminar -->
@@ -87,11 +87,32 @@
         </button>
       </div>
       <div class="modal-body">
-        <label for="descripcion">Descripcion</label>              
-        <input class="form-control" type="text" id="descripcion">
-        <label for="stock">Stock disponible</label>      
-        <input class="form-control block mt-1 w-36" type="number" name="stock" min="0" max="999" id="stock">     
+        <form >
+          <label for="#descripcion">Descripcion</label>              
+          <input class="form-control" type="text" id="descripcion"> 
+          <label for="fname">First name:</label>
+          <input type="text" id="fname" name="fname" size="50"><br><br>
+          <label for="pin">PIN:</label>
+          <input type="text" id="pin" name="pin" maxlength="4" size="4"><br><br>
+          <input type="submit" value="Submit">
+        </form>
+
+
+        <!--
+        <div class="form-group row">
+          <div class="col-xs-4 mt-3 ml-3">
+            <label for="#descripcion">Descripcion</label>              
+            <input class="form-control" type="text" id="descripcion">              
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-xs-2 mt-3 ml-3">
+            <label for="#stock">Stock disponible</label>
+            <input class="form-control" type="text" name="text" id="stock">    
+          </div>
+        </div>
       </div>
+    -->
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary">Editar</button>
@@ -135,10 +156,10 @@
 
 <!--Script del modal editar -->
 <script> 
-  $('#modalEditar').on('show.bs.modal', function(e) {
+  $('#modalEditar').on('show.bs.modal', function(e) {    
     var descripcion = $(e.relatedTarget).data('descripcion');    
-    var stock = $(e.relatedTarget).data('Stock_disponible');    
-    $(e.currentTarget).find('input[id="descripcion"]').val(descripcion);
-    $(e.currentTarget).find('input[id="stock"]').val(stock);
+    var stock = $(e.relatedTarget).data('stock');       
+    $(e.currentTarget).find('#descripcion').val(descripcion);
+    $(e.currentTarget).find('#stock').val(stock);
   });
 </script>
