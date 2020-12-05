@@ -45,6 +45,15 @@ class GestionArticulosController extends Controller
        return redirect()->route('gestionArticulos.menu');    
    }
 
+   /**
+    * Función que edita un articulo existente, actualiza la base de datos y retorna la vista al menu
+    * principal. 
+    * Parámetros: ID de articulo.
+    */
+   public function editar(Request $request, $ArticuloID){
+      return $request;
+   }
+
       /**
        * Función que recibe información a través de un post desde un formulario de la vista de inventario,
        * recupera el articulo de la tabla articulos con el ArticuloID enviado y actualiza el campo de
@@ -59,7 +68,7 @@ class GestionArticulosController extends Controller
       $articulo->save();
 
       //Regresa a la vista de punto de pedido
-      return redirect()->route('inventario.puntopedido');    
+      return redirect()->route('inventario.puntoPedido','puntoPedido');    
    }
 
    /**
@@ -80,9 +89,9 @@ class GestionArticulosController extends Controller
       * a la vista de recepción de articulos 
       */
       if ($request->ajuste < 0) {
-         return redirect()->route('inventario.ajusteinventario'); 
+         return redirect()->route('inventario.ajustarInventario','ajustarInventario'); 
       } else {
-         return redirect()->route('inventario.recepcionarticulo'); 
+         return redirect()->route('inventario.ajustarInventario','ajustarInventario'); 
       }        
    }
 
@@ -93,8 +102,9 @@ class GestionArticulosController extends Controller
     * request: proveedores seleccionados a asignar al articulo.
     */
    public function asignarProveedor(Request $request, $articuloID){      
+      return $request;
       //Se recorren todos los id de proveedores recibidos en el request a partir de la selección de proveedores.
-      foreach ($request->id as $proveedorID){
+      /*foreach ($request->id as $proveedorID){
          $vinculo = DB::table('articulo_proveedor')      
          ->where('ArticuloID',$articuloID)       
          ->where('ProveedorID',$proveedorID)
@@ -120,7 +130,7 @@ class GestionArticulosController extends Controller
       }
 
       //Regresa a la vista de consultas
-      return redirect()->route('gestionArticulos.menu');
+      return redirect()->route('gestionArticulos.menu');*/
    }
 
    
