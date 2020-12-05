@@ -29,7 +29,7 @@ class GestionSolicitudComprasController extends Controller
     
     public function registrarSolicitudCompra(Request $request){
       //Se crea la Nueva Solicitud de Compra
-      /*$sol=new Solicitud_Compras();
+      $sol=new Solicitud_Compras();
       $sol->FechaRegistro=date("Y-n-j");
       $sol->save();
       //Se recupera la Solicitud de compra Recien Creada
@@ -38,19 +38,17 @@ class GestionSolicitudComprasController extends Controller
       //y se iran dando de alta los detalles 
       
       $i=0;
-     for ($j=0, $size = count($articulos); $j < $size; $j++){
+     foreach ($request->ids as $articuloID){
             $detalle=new Detalle_Solicitud_Compras(); 
             $detalle->Cantidad= $request->cantidades[$i];
-            $detalle->FechaReposicionEstimada= $request->fechas[$i];
-            $detalle->ArticuloID=$articulos[$j]->ArticuloID;
+            $detalle->FechaResposicionEstimada= $request->fechas[$i];
+            $detalle->ArticuloID=$articuloID;
             $detalle->SolicitudCompraID=$sol;
-            $i++;
             $detalle->save();
+            $i++;
       }
-   
       //Regresa a la vista de consultas
-      return redirect()->route('compras.solicitudCompras');*/
-      return $request;
+      return redirect()->route('compras.solicitudCompras');
    }
 
    public function cantidadArticulos(Request $request){
