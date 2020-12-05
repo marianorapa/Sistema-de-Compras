@@ -1,14 +1,14 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-bold text-xl text-blue-800 leading-tight">
-        {{ __('Seleccionar Articulos a Solicitar') }}
+        {{ __('Ingresar Cantidad de Aritculos Solicitados') }}
     </h2>
   </x-slot>
 
   <div class="container h-auto mx-auto mt-4">
     <div class="row">
       <div class="col-4">
-        <a class="btn btn-danger" href="{{route('compras.solicitudCompras')}}" role="button">Atras</a>
+        <a class="btn btn-danger" href="{{route('compras.solicitudCompra.selecArticulos')}}" role="button">Atras</a>
       </div>       
       <div class="col-sm-4 overflow-hidden shadow-md sm:rounded-lg bg-white">  
           <h3 class="text-center">Solicitud de Compra:</h3>
@@ -18,7 +18,7 @@
     </div> 
   </div>
 
-  <form id="frm-example" action="{{route('compras.solicitudCompra.cantArticulos')}}" method="POST">
+  <form id="frm-example" action="{{route('compras.solicitudCompra.registrarSolicitudCompra')}}" method="POST">
     @csrf 
   <div class="container h-auto sm:rounded-md shadow-md mx-auto mt-4 p-3 bg-white">
     <div class="d-flex justify-content-center mt-3"> 
@@ -27,63 +27,33 @@
     <table id="example" class="table table-hover table-bordered" style="width:100%">
           <thead>         
               <tr class="bg-blue-50">
-                <th><input name="select_all" value="1" type="checkbox"></th>  
+              <th><input name="select_all" value="1" type="checkbox"></th>
                   <th>ID</th>
                   <th>Descripción</th>
-                  {{--<th class="text-center">Seleccionar</th>            --}}
+                  <th>Cantidad</th>
+                  <th>Fecha de Reposicion</th>
               </tr>
           </thead>
           <tbody>
+            
             @foreach ($articulos as $a) 
-              <tr>
-                <th></th>
-                  <td>{{$a->ArticuloID}}</td>
+            <tr>
+                  <td></td>
+                  <td class="id">{{$a->ArticuloID}}</td>
                   <td>{{$a->Descripcion}}</td>
-                  {{--<td class="text-center"><input type="checkbox" id="{{$a->ArticuloID}}" name="ArticulosID[]" value="{{$a->ArticuloID}}"></td>            --}}
+                  <td><input type="number" name="cantidades[] "></td>
+                  <td><input type="date" name="fechas[]" ></td>
               </tr>                                   
             @endforeach                  
           </tbody>         
         </table>                      
   </div>    
-</form> 
-
+</form>
 </x-app-layout>
-
 @livewireScripts
-
-       
 
 
 <script>
-  
-  function updateDataTableSelectAllCtrl(table){
-    var $table             = table.table().node();
-    var $chkbox_all        = $('tbody input[type="checkbox"]', $table);
-    var $chkbox_checked    = $('tbody input[type="checkbox"]:checked', $table);
-    var chkbox_select_all  = $('thead input[name="select_all"]', $table).get(0);
-
-    // If none of the checkboxes are checked
-    if($chkbox_checked.length === 0){
-      chkbox_select_all.checked = false;
-      if('indeterminate' in chkbox_select_all){
-          chkbox_select_all.indeterminate = false;
-      }
-    }
-    // If all of the checkboxes are checked
-    else if ($chkbox_checked.length === $chkbox_all.length){
-      chkbox_select_all.checked = true;
-      if('indeterminate' in chkbox_select_all){
-        chkbox_select_all.indeterminate = false;
-      }
-    }
-    // If some of the checkboxes are checked
-    else {
-      chkbox_select_all.checked = true;
-      if('indeterminate' in chkbox_select_all){
-        chkbox_select_all.indeterminate = true;
-      }
-    }
-  }
 
   $(document).ready(function (){
     
@@ -96,7 +66,7 @@
         "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
       },
 
-      'columnDefs': [{
+      /*'columnDefs': [{
         'targets': 0,
         'searchable':false,
         'orderable':false,
@@ -105,7 +75,7 @@
         'render': function (data, type, full, meta){
           return '<input type="checkbox">';
         }
-      }],     
+      }],*/     
 
       'order': [1, 'asc'],
 
@@ -115,15 +85,15 @@
 
         // If row ID is in the list of selected row IDs
         if($.inArray(rowId, rows_selected) !== -1){
-          $(row).find('input[type="checkbox"]').prop('checked', true);
-          $(row).addClass('selected');
+          $(row).find('id');
+         // $(row).addClass('selected');
         }
       }
 
     });
 
     // Handle click on checkbox
-    $('#example tbody').on('click', 'input[type="checkbox"]', function(e){
+    /*$('#example tbody').on('click', 'input[type="checkbox"]', function(e){
       var $row = $(this).closest('tr');
 
       // Get row data
@@ -154,10 +124,10 @@
 
       // Prevent click event from propagating to parent
       e.stopPropagation();
-    });
+    });*/
 
     // Handle click on table cells with checkboxes
-    $('#example').on('click', 'tbody td, thead th:first-child', function(e){
+    /*$('#example').on('click', 'tbody td, thead th:first-child', function(e){
       $(this).parent().find('input[type="checkbox"]').trigger('click');
     });
 
@@ -177,7 +147,7 @@
     table.on('draw', function(){
       // Update state of "Select all" control
       updateDataTableSelectAllCtrl(table);
-    });
+    });*/
       
     // Handle form submission event 
     $('#frm-example').on('submit', function(e){
