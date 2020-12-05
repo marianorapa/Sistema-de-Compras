@@ -69,7 +69,6 @@ Route::post('/sectores',[GestionSectoresController::class,'store'])->name('secto
 
 
 //Gestión de Articulos-----------------------------------------------------------------------------------------------
-//Route::get('/gestionArticulos/{path}', ArticuloComponent::class)->name('gestionArticulos');
 Route::get('/gestionArticulos/menu', [GestionArticulosController::class, 'menu'])->name('gestionArticulos.menu');
 Route::get('/articulos/alta', [GestionArticulosController::class, 'alta'])->name('articulo.alta');
 Route::get('/articulos/gestion', [ArticuloComponent::class,'render'])->name('articulos.gestion'); 
@@ -78,6 +77,7 @@ Route::get('gestionArticulos/{ArticuloID}/desvincular', [GestionArticulosControl
 Route::put('/articulos/{ArticuloID}/establecer', [GestionArticulosController::class, 'establecer'])->name('articulo.establecer');
 Route::put('/articulos/{ArticuloID}/ajustar', [GestionArticulosController::class, 'ajustar'])->name('articulo.ajustar');
 Route::put('/articulos/{ArticuloID}/desasignarProveedor',[GestionArticulosController::class,'desasignarProveedor'])->name('articulo.desasignarProveedor');
+Route::post('/articulos/{ArticuloID}/editar',[GestionArticulosController::class, 'editar'])->name('articulo.editar');
 Route::post('/articulos/{ArticuloID}/asignarProveedor',[GestionArticulosController::class,'asignarProveedor'])->name('articulo.asignarProveedor');
 Route::post('/articulos',[GestionArticulosController::class,'store'])->name('articulo.store'); 
 
@@ -102,3 +102,4 @@ Route::get('/gestionInventario/4-{path}', ArticuloComponent::class)->name('inven
 Route::get('/gestionCompras/solicitudesCompras',[GestionSolicitudComprasController::class,'index'] )->name('compras.solicitudCompras');
 Route::get('/gestionCompras/solicitudesCompras/alta_sel_art', [GestionSolicitudComprasController::class,'seleccionarArticulos'])->name('compras.solicitudCompra.selecArticulos');
 Route::post('/gestionCompras/solicitudesCompras/alta_cant_art', [GestionSolicitudComprasController::class,'cantidadArticulos'])->name('compras.solicitudCompra.cantArticulos');
+Route::post('/gestionCompras/solicitudesCompras/registrarSolicitud', [GestionSolicitudComprasController::class,'registrarSolicitudCompra'])->name('compras.solicitudCompra.registrarSolicitudCompra');

@@ -5,19 +5,22 @@
         </h2>
     </x-slot>
 
-    <div class="container h-auto mx-auto mt-2">
+    <div class="container-lg mx-auto mt-2">
         <div class="d-flex justify-content-center"> 
             <a class="btn btn-primary" href="{{route('articulo.alta')}}" role="button">Alta de Artículo</a>
         </div> 
 
-        <div class="container h-auto sm:rounded-md shadow-md mx-auto mt-2 p-2 bg-white">
+        <div class="container-lg sm:rounded-md shadow-md mx-auto mt-2 p-2 bg-white">
             <table id="example" class="table table-hover table-bordered" style="width:100%">
                 <thead>         
                     <tr class="bg-blue-50">           
-                        <th class="text-center w-4">ID</th>
-                        <th>Artículo</th>
-                        <th class="text-center w-32">Punto de pedido</th>                            
-                        <th class="text-center w-28">Stcok actual</th>  
+                        <th class="text-center w-2">ID</th>
+                        <th class="w-40">Artículo</th>
+                        <th class="text-center w-20">Embalaje</th> 
+                        <th class="text-center w-12">U. de medida</th> 
+                        <th class="text-center w-12">U. por bulto</th>
+                        <th class="text-center w-12">Punto pedido</th>                            
+                        <th class="text-center w-10">Stcok</th>  
                         <th class="text-center w-32">Acciones</th>  
                         <th class="text-center w-40">Proveedores</th>  
                     </tr>
@@ -25,13 +28,16 @@
                 <tbody>
                 @foreach ($articulos as $a) 
                     <tr>                
-                        <td class="text-center">{{$a->ArticuloID}}</td>
+                        <td class="text-center">{{$a->ArticuloID}}</td>                        
                         <td>{{$a->Descripcion}}</td>
+                        <td>{{$a->Tipo_embalaje}}</td>
+                        <td>{{$a->Unidad_medida}}</td>
+                        <td class="text-center">{{$a->Unidad_bulto}}</td>
                         <td class="text-center">{{$a->Punto_pedido}}</td>  
                         <td class="text-center">{{$a->Stock_disponible}}</td>  
                         <td class="text-center">
                           <!-- Boton trigger modal eliminar -->
-                          <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modalEditar" data-descripcion="{{$a->Descripcion}}" data-stock="{{$a->Stock_disponible}}">
+                          <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modalEditar">
                             Editar
                           </button>
                           <!-- Boton trigger modal eliminar -->
@@ -43,6 +49,7 @@
                             <a href="{{route('articulo.vincular',$a->ArticuloID)}}" class="btn btn-outline-info btn-sm">Vincular</a>
                             <a href="{{route('articulo.desvincular',$a->ArticuloID)}}" class="btn btn-outline-danger btn-sm">Desvincular</a>
                         </td>
+        
                     </tr>                                   
                 @endforeach                  
                 </tbody>         
@@ -77,49 +84,79 @@
 </div>
 
 <!-- Modal editar -->
-<div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+ <div class="modal fade" id="modalEditar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Editar artículo</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Editar artículo </h5>        
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <form >
-          <label for="#descripcion">Descripcion</label>              
-          <input class="form-control" type="text" id="descripcion"> 
-          <label for="fname">First name:</label>
-          <input type="text" id="fname" name="fname" size="50"><br><br>
-          <label for="pin">PIN:</label>
-          <input type="text" id="pin" name="pin" maxlength="4" size="4"><br><br>
-          <input type="submit" value="Submit">
-        </form>
-
-
-        <!--
+      <form action={{route('articulo.editar',$a->ArticuloID)}} method="POST">
+        @csrf 
+      <div class="modal-body">            
         <div class="form-group row">
-          <div class="col-xs-4 mt-3 ml-3">
+          <div class="col-xs-4 ml-3">
+            <label for="#id">ID Artículo</label>  
+          <h3 class="form-control" id="Articulo">{{$a->ArticuloID}}</h3>                          
+          </div>
+          <div class="col">
             <label for="#descripcion">Descripcion</label>              
-            <input class="form-control" type="text" id="descripcion">              
+            <input class="form-control" type="text" id="descripcion" name="descripcion" size="50" required>              
           </div>
-        </div>
+        </div>   
         <div class="form-group row">
-          <div class="col-xs-2 mt-3 ml-3">
-            <label for="#stock">Stock disponible</label>
-            <input class="form-control" type="text" name="text" id="stock">    
+          <div class="col">
+            <label for="#tipo_embalaje">Tipo de embalaje</label>
+              <select name="tipo_embalaje" class="form-select rounded-md shadow-sm mt-2" required>                       
+                <option value="Bolsa">Bolsa</option> 
+                <option value="Caja">Caja</option> 
+                <option value="Sin embalaje">Sin embalaje</option>                            
+              </select> 
+          </div>                   
+          <div class="col">            
+            <label for="#unidad_medida">Unidad de Medida</label>
+              <select name="unidad_medida" class="form-select rounded-md shadow-sm mt-1 w-36" required>
+                <option value="Unidad">Unidad</option> 
+                <option value="Metro">Metro</option> 
+                <option value="Kilogramo">Kilogramo</option>
+                <option value="Litro">Litro</option>                                                        
+                <option value="Sin unidad">Sin unidad</option>
+              </select>
+          </div>         
+        </div>      
+        <div class="form-group row">     
+          <div class="col">
+            <label for="#stock">Stock</label>
+            <input class="form-control" type="number" id="stock" name="stock" min="0" max="100">  
           </div>
-        </div>
+          <div class="col">
+            <label for="#punto_pedido">Punto de pedido</label>
+            <input class="form-control" type="number" id="punto_pedido" name="punto_pedido" min="0" max="100">  
+          </div>            
+        </div> 
+
       </div>
-    -->
+
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Editar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>        
+        <button type="submit" class="btn btn-primary">Editar</button>
       </div>
+    </form>
     </div>
   </div>
 </div>
+
+ 
+
+@livewireStyles
+
+<style type="text/css">
+#stock,#punto_pedido {
+  width: 5em;
+}
+</style>
 
 @livewireScripts
 
@@ -155,11 +192,18 @@
 </script>
 
 <!--Script del modal editar -->
+
 <script> 
   $('#modalEditar').on('show.bs.modal', function(e) {    
-    var descripcion = $(e.relatedTarget).data('descripcion');    
-    var stock = $(e.relatedTarget).data('stock');       
+    var id = $(e.relatedTarget).data('id');  
+    var descripcion = $(e.relatedTarget).data('descripcion');      
+    var stock = $(e.relatedTarget).data('stock');    
+    var punto_pedido =   $(e.relatedTarget).data('punto_pedido');  
+    //$(".modal-body h3").text(id);
     $(e.currentTarget).find('#descripcion').val(descripcion);
     $(e.currentTarget).find('#stock').val(stock);
+    $(e.currentTarget).find('#punto_pedido').val(punto_pedido);
   });
 </script>
+
+

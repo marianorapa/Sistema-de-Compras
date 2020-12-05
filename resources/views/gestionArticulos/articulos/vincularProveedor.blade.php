@@ -95,13 +95,13 @@
       },
 
       'columnDefs': [{
-        'targets': 0,
+        'targets': 0,     
         'searchable':false,
         'orderable':false,
         'width':'2%',
         'className': 'dt-body-center',
         'render': function (data, type, full, meta){
-          return '<input type="checkbox">';
+          return '<input type="checkbox">';         
         }
       }],     
 
