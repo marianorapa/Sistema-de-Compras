@@ -13,7 +13,7 @@ class SolicitudesPresupuestos extends Migration
      */
     public function up()
     {
-        schema::create('solicitudes_presupuestos', function(Blueprint $table){
+        schema::create(solicitudes_presupuestos, function(Blueprint $table){
             $table->id('SolicitudPresupuestoID');
             $table->date('FechaRegistro');
             $table->foreign('UsuarioID')->references('name')->on('users');

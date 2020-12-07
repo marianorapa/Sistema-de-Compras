@@ -15,7 +15,6 @@ class Proveedores extends Migration
     {
         schema::create('proveedores', function(Blueprint $table){
             $table->id('ProveedorID');
-            $table->integer('Activo')->default(0);
             $table->string('Nombre',50);
             $table->string('Razon_social',25);
             $table->string('Cuit',11);
