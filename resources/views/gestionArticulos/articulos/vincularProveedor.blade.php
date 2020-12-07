@@ -18,7 +18,7 @@
     </div> 
   </div>
 
-  <form id="frm-example" action={{route('articulo.asignarProveedor',$articulo->ArticuloID)}} method="POST">
+  <form id="frm-example" action={{route('gestionArticulos.asignarProveedor',$articulo->ArticuloID)}} method="POST">
   @csrf 
   <div class="d-flex justify-content-center mt-3"> 
     <button type="submit" class="btn btn-primary">Vincular</button>

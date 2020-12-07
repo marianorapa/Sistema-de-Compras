@@ -18,7 +18,7 @@
     </div> 
   </div>
   
-  <form id="frm-example" action={{route('articulo.desasignarProveedor',$articulo->ArticuloID)}} method="POST">
+  <form id="frm-example" action={{route('gestionArticulos.desasignarProveedor',$articulo->ArticuloID)}} method="POST">
   @csrf 
   @method('put')
   <div class="d-flex justify-content-center mt-3"> 

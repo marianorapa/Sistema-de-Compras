@@ -7,7 +7,6 @@
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
                         <img src="/img/logo_nav.png" alt="logo">
-                        <!--<x-jet-application-mark class="block h-9 w-auto" />-->
                     </a>
                 </div>
 
@@ -26,12 +25,11 @@
                         Gestion de Inventario
                     </x-jet-nav-link>                                                       
                     
-                    {{--<x-jet-nav-link href="{{ route('gestionArticulos','menu2') }}" :active="request()->routeIs('gestionArticulos')">--}}
                     <x-jet-nav-link href="{{ route('gestionArticulos.menu') }}" :active="request()->routeIs('gestionArticulos')">                    
                         Gestion de Articulos                        
                     </x-jet-nav-link>
                     
-                    <x-jet-nav-link href="{{ route('gestionProveedores','menu') }}" :active="request()->routeIs('gestionProveedores')">
+                    <x-jet-nav-link href="{{ route('gestionProveedores.menu') }}" :active="request()->routeIs('gestionProveedores')">
                         Gestion de Proveedores
                     </x-jet-nav-link>                                               
                     

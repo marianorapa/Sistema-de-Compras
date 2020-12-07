@@ -7,7 +7,8 @@
 
     <div class="container-lg mx-auto mt-2">
         <div class="d-flex justify-content-center"> 
-            <a class="btn btn-primary" href="{{route('articulo.alta')}}" role="button">Alta de Artículo</a>
+          <!-- Boton trigger modal alta-->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAlta">Alta de Artículo</button>
         </div> 
 
         <div class="container-lg sm:rounded-md shadow-md mx-auto mt-2 p-2 bg-white">
@@ -27,6 +28,7 @@
                 </thead>
                 <tbody>
                 @foreach ($articulos as $a) 
+                  @if ( $a->Activo == 1 )
                     <tr>                
                         <td class="text-center">{{$a->ArticuloID}}</td>                        
                         <td>{{$a->Descripcion}}</td>
@@ -36,21 +38,31 @@
                         <td class="text-center">{{$a->Punto_pedido}}</td>  
                         <td class="text-center">{{$a->Stock_disponible}}</td>  
                         <td class="text-center">
-                          <!-- Boton trigger modal eliminar -->
-                          <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modalEditar">
+                          <!-- Boton trigger modal editar -->
+                          <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modalEditar"
+                          data-id={{$a->ArticuloID}}
+                          data-descripcion="{{$a->Descripcion}}" 
+                          data-unidad_bulto={{$a->Unidad_bulto}}                                      
+                          data-punto_pedido={{$a->Punto_pedido}}
+                          data-stock={{$a->Stock_disponible}}
+                          >
                             Editar
                           </button>
                           <!-- Boton trigger modal eliminar -->
-                          <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalEliminar" data-descripcion="{{$a->Descripcion}}" data-stock="{{$a->Stock_disponible}}">
+                          <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalEliminar" 
+                          data-id={{$a->ArticuloID}}
+                          data-descripcion="{{$a->Descripcion}}" 
+                          >
                               Eliminar
                           </button>
                         </td>
                         <td class="text-center">
-                            <a href="{{route('articulo.vincular',$a->ArticuloID)}}" class="btn btn-outline-info btn-sm">Vincular</a>
-                            <a href="{{route('articulo.desvincular',$a->ArticuloID)}}" class="btn btn-outline-danger btn-sm">Desvincular</a>
+                            <a href="{{route('gestionArticulos.vincular',$a->ArticuloID)}}" class="btn btn-outline-info btn-sm">Vincular</a>
+                            <a href="{{route('gestionArticulos.desvincular',$a->ArticuloID)}}" class="btn btn-outline-danger btn-sm">Desvincular</a>
                         </td>
         
-                    </tr>                                   
+                    </tr>                                              
+                  @endif                               
                 @endforeach                  
                 </tbody>         
             </table>                      
@@ -69,7 +81,11 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <form action={{route('gestionArticulos.eliminar')}} method="POST">
+        @csrf 
+        @method('put')
       <div class="modal-body">
+        <input class="form-control" type="hidden" id="id" name="id">   
         <p class="text-center">
           ¿Estás seguro que deseas eliminar el siguiente artículo?
         </p>
@@ -77,8 +93,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Eliminar</button>
+        <button type="submit" class="btn btn-primary">Eliminar</button>
       </div>
+      </form>
     </div>
   </div>
 </div>
@@ -93,23 +110,21 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action={{route('articulo.editar',$a->ArticuloID)}} method="POST">
-        @csrf 
-      <div class="modal-body">            
-        <div class="form-group row">
-          <div class="col-xs-4 ml-3">
-            <label for="#id">ID Artículo</label>  
-          <h3 class="form-control" id="Articulo">{{$a->ArticuloID}}</h3>                          
-          </div>
+      <form action={{route('gestionArticulos.editar')}} method="POST">
+      @csrf 
+      @method('put')
+      <div class="modal-body">                
+        <div class="form-group row">        
           <div class="col">
+            <input class="form-control" type="hidden" id="id" name="id">   
             <label for="#descripcion">Descripcion</label>              
-            <input class="form-control" type="text" id="descripcion" name="descripcion" size="50" required>              
+            <input class="form-control" type="text" id="descripcion" name="descripcion" required>             
           </div>
         </div>   
         <div class="form-group row">
           <div class="col">
             <label for="#tipo_embalaje">Tipo de embalaje</label>
-              <select name="tipo_embalaje" class="form-select rounded-md shadow-sm mt-2" required>                       
+              <select name="tipo_embalaje" class="form-select rounded-md shadow-sm mt-1" required>                       
                 <option value="Bolsa">Bolsa</option> 
                 <option value="Caja">Caja</option> 
                 <option value="Sin embalaje">Sin embalaje</option>                            
@@ -124,9 +139,13 @@
                 <option value="Litro">Litro</option>                                                        
                 <option value="Sin unidad">Sin unidad</option>
               </select>
-          </div>         
+          </div>                 
         </div>      
         <div class="form-group row">     
+          <div class="col">
+            <label for="#unidad_bulto">Unidad por bulto</label>
+            <input class="form-control" type="number" id="unidad_bulto" name="unidad_bulto" min="0" max="100">  
+          </div> 
           <div class="col">
             <label for="#stock">Stock</label>
             <input class="form-control" type="number" id="stock" name="stock" min="0" max="100">  
@@ -136,7 +155,6 @@
             <input class="form-control" type="number" id="punto_pedido" name="punto_pedido" min="0" max="100">  
           </div>            
         </div> 
-
       </div>
 
       <div class="modal-footer">
@@ -148,13 +166,78 @@
   </div>
 </div>
 
+<!-- Modal alta -->
+<div class="modal fade" id="modalAlta" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Alta de Artículo</h5>        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{{route('gestionArticulos.alta')}}" method="POST">
+      <!-- Se agrega @csrf para que se genere un token oculto para este form -->
+      @csrf      
+      <div class="modal-body">                
+        <div class="form-group row">        
+          <div class="col">       
+            <label for="#descripcion">Descripcion</label>              
+            <input class="form-control" type="text" id="descripcion" name="descripcion" required>             
+          </div>
+        </div>   
+        <div class="form-group row">
+          <div class="col">
+            <label for="#tipo_embalaje">Tipo de embalaje</label>
+              <select name="tipo_embalaje" class="form-select rounded-md shadow-sm mt-1" required>                       
+                <option value="Bolsa">Bolsa</option> 
+                <option value="Caja">Caja</option> 
+                <option value="Sin embalaje">Sin embalaje</option>                            
+              </select> 
+          </div>                   
+          <div class="col">            
+            <label for="#unidad_medida">Unidad de Medida</label>
+              <select name="unidad_medida" class="form-select rounded-md shadow-sm mt-1 w-36" required>
+                <option value="Unidad">Unidad</option> 
+                <option value="Metro">Metro</option> 
+                <option value="Kilogramo">Kilogramo</option>
+                <option value="Litro">Litro</option>                                                        
+                <option value="Sin unidad">Sin unidad</option>
+              </select>
+          </div>                 
+        </div>      
+        <div class="form-group row">     
+          <div class="col">
+            <label for="#unidad_bulto">Unidad por bulto</label>
+            <input class="form-control" type="number" id="unidad_bulto" name="unidad_bulto" min="0" max="100">  
+          </div> 
+          <div class="col">
+            <label for="#stock">Stock</label>
+            <input class="form-control" type="number" id="stock" name="stock" min="0" max="100">  
+          </div>
+          <div class="col">
+            <label for="#punto_pedido">Punto de pedido</label>
+            <input class="form-control" type="number" id="punto_pedido" name="punto_pedido" min="0" max="100">  
+          </div>            
+        </div> 
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>        
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
  
 
 @livewireStyles
 
 <style type="text/css">
-#stock,#punto_pedido {
-  width: 5em;
+#stock,#punto_pedido,#unidad_bulto {
+  width: 7em;
 }
 </style>
 
@@ -185,22 +268,25 @@
 
 <!--Script del modal eliminar -->
 <script> 
- $('#modalEliminar').on('show.bs.modal', function(e) {
+  $('#modalEliminar').on('show.bs.modal', function(e) {
+    var id = $(e.relatedTarget).data('id');
     var descripcion = $(e.relatedTarget).data('descripcion');    
+    $(e.currentTarget).find('#id').val(id);
     $(".modal-body h5").text(descripcion);
   });
 </script>
 
 <!--Script del modal editar -->
-
 <script> 
   $('#modalEditar').on('show.bs.modal', function(e) {    
     var id = $(e.relatedTarget).data('id');  
-    var descripcion = $(e.relatedTarget).data('descripcion');      
+    var descripcion = $(e.relatedTarget).data('descripcion');  
+    var unidad_bulto = $(e.relatedTarget).data('unidad_bulto');  
     var stock = $(e.relatedTarget).data('stock');    
-    var punto_pedido =   $(e.relatedTarget).data('punto_pedido');  
-    //$(".modal-body h3").text(id);
-    $(e.currentTarget).find('#descripcion').val(descripcion);
+    var punto_pedido =  $(e.relatedTarget).data('punto_pedido');  
+    $(e.currentTarget).find('#id').val(id);
+    $(e.currentTarget).find('#descripcion').val(descripcion);    
+    $(e.currentTarget).find('#unidad_bulto').val(unidad_bulto);   
     $(e.currentTarget).find('#stock').val(stock);
     $(e.currentTarget).find('#punto_pedido').val(punto_pedido);
   });
