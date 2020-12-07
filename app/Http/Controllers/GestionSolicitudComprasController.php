@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Articulo;
 use App\Models\Detalle_Solicitud_Compras;
 use App\Models\Solicitud_Compras;
+use App\Models\Estado;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

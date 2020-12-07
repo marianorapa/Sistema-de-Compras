@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Detalle_Solicitud_Compras extends Model
+class Estado extends Model
 {
     use HasFactory;
-    protected $table="detalles_solicitud_compras";
-    protected $primaryKey= array('ArticuloID','SolicitudCompraID');
+    protected $table="estados";
+    //Vinculo con la clave primaria de la tabla
+    protected $primaryKey= array('EstadoID','FechaHora');
     public $timestamps = false;//inhabilita los timestamps
 }
