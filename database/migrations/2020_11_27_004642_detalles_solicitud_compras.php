@@ -14,13 +14,14 @@ class DetallesSolicitudCompras extends Migration
     public function up()
     {
         schema::create('detalles_solicitud_compras', function(Blueprint $table){
-            $table->id('ItemID');
+          
             $table->integer('Cantidad');
             $table->Date('FechaResposicionEstimada');
             $table->unsignedBiginteger('ArticuloID');
             $table->unsignedBiginteger('SolicitudCompraID');
             $table->foreign('ArticuloID')->references('ArticuloID')->on('articulos');
             $table->foreign('SolicitudCompraID')->references('SolicitudCompraID')->on('solicitud_compras');
+            $table->primary(['ArticuloID','SolicitudCompraID']);
         });
     }
 

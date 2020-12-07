@@ -9,7 +9,5 @@ class Detalle_Solicitud_Compras extends Model
 {
     use HasFactory;
     protected $table="detalles_solicitud_compras";
-    //Vinculo con la clave primaria de la tabla
-    protected $primaryKey=('ItemID');
     public $timestamps = false;//inhabilita los timestamps
 }
