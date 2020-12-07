@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-12-2020 a las 00:56:11
+-- Tiempo de generación: 03-12-2020 a las 01:41:46
 -- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.4.11
+-- Versión de PHP: 7.3.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,7 +29,6 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `articulos` (
   `ArticuloID` bigint(20) UNSIGNED NOT NULL,
-  `Activo` int(1) NOT NULL,
   `Descripcion` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `Tipo_embalaje` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
   `Unidad_medida` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -42,21 +41,21 @@ CREATE TABLE `articulos` (
 -- Volcado de datos para la tabla `articulos`
 --
 
-INSERT INTO `articulos` (`ArticuloID`, `Activo`, `Descripcion`, `Tipo_embalaje`, `Unidad_medida`, `Unidad_bulto`, `Punto_pedido`, `Stock_disponible`) VALUES
-(1, 0, 'Medidores', 'Caja', '1', 1, 100, 35),
-(2, 0, 'Caño de PVC de 50\'', 'Sin embalaje', 'Unidad', 1, 20, 30),
-(4, 0, 'Caño de PVC de 75\'', 'Sin embalaje', 'Unidad', 1, 30, 90),
-(5, 0, 'articulo2', 'Bolsa', 'Unidad', 5, 0, 0),
-(6, 0, 'articulo2', 'Bolsa', 'Unidad', 5, 0, 0),
-(7, 0, 'articulo3', 'Bolsa', 'Unidad', 5, 0, 0),
-(8, 0, 'articulo3', 'Bolsa', 'Unidad', 5, 0, 0),
-(9, 0, 'articulo6', 'Bolsa', 'Unidad', 0, 0, 0),
-(10, 0, 'articuo', 'Bolsa', 'Unidad', 0, 0, 0),
-(11, 0, 'Caretilla', 'Sin embalaje', 'Unidad', 1, 2, 3),
-(12, 0, 'Caretilla', 'Sin embalaje', 'Unidad', 1, 2, 3),
-(13, 0, 'Abrazadera PVC 50 mm', 'Caja', 'Unidad', 20, 10, 60),
-(14, 0, 'Abrazadera PVC 75 mm', 'Caja', 'Unidad', 20, 30, 80),
-(15, 0, 'Acople de mango roscado de 1/2 para medidor corto', 'Caja', 'Unidad', 20, 20, 60);
+INSERT INTO `articulos` (`ArticuloID`, `Descripcion`, `Tipo_embalaje`, `Unidad_medida`, `Unidad_bulto`, `Punto_pedido`, `Stock_disponible`) VALUES
+(1, 'Medidores', 'Caja', '1', 1, 100, 35),
+(2, 'Caño de PVC de 50\'', 'Sin embalaje', 'Unidad', 1, 20, 30),
+(4, 'Caño de PVC de 75\'', 'Sin embalaje', 'Unidad', 1, 30, 90),
+(5, 'articulo2', 'Bolsa', 'Unidad', 5, 0, 0),
+(6, 'articulo2', 'Bolsa', 'Unidad', 5, 0, 0),
+(7, 'articulo3', 'Bolsa', 'Unidad', 5, 0, 0),
+(8, 'articulo3', 'Bolsa', 'Unidad', 5, 0, 0),
+(9, 'articulo6', 'Bolsa', 'Unidad', 0, 0, 0),
+(10, 'articuo', 'Bolsa', 'Unidad', 0, 0, 0),
+(11, 'Caretilla', 'Sin embalaje', 'Unidad', 1, 2, 3),
+(12, 'Caretilla', 'Sin embalaje', 'Unidad', 1, 2, 3),
+(13, 'Abrazadera PVC 50 mm', 'Caja', 'Unidad', 20, 10, 60),
+(14, 'Abrazadera PVC 75 mm', 'Caja', 'Unidad', 20, 30, 80),
+(15, 'Acople de mango roscado de 1/2 para medidor corto', 'Caja', 'Unidad', 20, 20, 60);
 
 -- --------------------------------------------------------
 
@@ -96,19 +95,6 @@ INSERT INTO `articulo_proveedor` (`ArticuloID`, `ProveedorID`, `FechaDesde`, `Fe
 (13, 4, '2020-12-02', NULL),
 (13, 5, '2020-12-02', '2020-12-02'),
 (13, 7, '2020-12-02', NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `detalles_solicitud_compras`
---
-
-CREATE TABLE `detalles_solicitud_compras` (
-  `Cantidad` int(11) NOT NULL,
-  `FechaResposicionEstimada` date NOT NULL,
-  `ArticuloID` bigint(20) UNSIGNED NOT NULL,
-  `SolicitudCompraID` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -157,8 +143,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (24, '2020_11_13_210614_proveedores', 1),
 (25, '2020_11_12_210614_proveedores', 2),
 (26, '2020_11_23_142300_articulo_proveedor', 2),
-(27, '2020_11_26_213746_solicitud_compras', 3),
-(28, '2020_11_27_004642_detalles_solicitud_compras', 4);
+(27, '2020_11_26_213746_solicitud_compras', 3);
 
 -- --------------------------------------------------------
 
@@ -317,7 +302,6 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('w1nQyIESrapNcgbSsbuWiSCgcSugJRTZO4hKdKC8', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiek5US2JHRDVPcTcyd2hLcXBVQVo5MGNDUlpKN0lJYlpURlRUT3V6NCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Njg6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9nZXN0aW9uQ29tcHJhcy9zb2xpY2l0dWRlc0NvbXByYXMvYWx0YV9zZWxfYXJ0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDM1Z01CbGtjazdpV2VjdnlMTTZMYXV1d3pLZG1WOFJEb3dUMzNaZXNlY3Jlc3diQ3liZlZhIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCQzNWdNQmxrY2s3aVdlY3Z5TE02TGF1dXd6S2RtVjhSRG93VDMzWmVzZWNyZXN3YkN5YmZWYSI7fQ==', 1607298747),
 ('y0R6fZxuuJ2mh7cKuWkJS10kgETAj81P9cq2AfMC', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiQXVMckp6UHVEaDVjSHZRbTk0bHVHZUVJU0V0U1BFM0tobDhTVDJ2SSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NjU6Imh0dHA6Ly9zaWdjb20udGVzdC9nZXN0aW9uQ29tcHJhcy9zb2xpY2l0dWRlc0NvbXByYXMvYWx0YV9zZWxfYXJ0Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDM1Z01CbGtjazdpV2VjdnlMTTZMYXV1d3pLZG1WOFJEb3dUMzNaZXNlY3Jlc3diQ3liZlZhIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCQzNWdNQmxrY2s3aVdlY3Z5TE02TGF1dXd6S2RtVjhSRG93VDMzWmVzZWNyZXN3YkN5YmZWYSI7fQ==', 1606955840);
 
 -- --------------------------------------------------------
@@ -336,8 +320,7 @@ CREATE TABLE `solicitud_compras` (
 --
 
 INSERT INTO `solicitud_compras` (`SolicitudCompraID`, `FechaRegistro`) VALUES
-(1, '2020-11-27'),
-(2, '2020-12-06');
+(1, '2020-11-27');
 
 -- --------------------------------------------------------
 
@@ -385,13 +368,6 @@ ALTER TABLE `articulos`
 ALTER TABLE `articulo_proveedor`
   ADD PRIMARY KEY (`ArticuloID`,`ProveedorID`),
   ADD KEY `articulo_proveedor_proveedorid_foreign` (`ProveedorID`);
-
---
--- Indices de la tabla `detalles_solicitud_compras`
---
-ALTER TABLE `detalles_solicitud_compras`
-  ADD PRIMARY KEY (`ArticuloID`,`SolicitudCompraID`),
-  ADD KEY `detalles_solicitud_compras_solicitudcompraid_foreign` (`SolicitudCompraID`);
 
 --
 -- Indices de la tabla `failed_jobs`
@@ -495,7 +471,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `personal_access_tokens`
@@ -519,7 +495,7 @@ ALTER TABLE `sectores`
 -- AUTO_INCREMENT de la tabla `solicitud_compras`
 --
 ALTER TABLE `solicitud_compras`
-  MODIFY `SolicitudCompraID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `SolicitudCompraID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -537,13 +513,6 @@ ALTER TABLE `users`
 ALTER TABLE `articulo_proveedor`
   ADD CONSTRAINT `articulo_proveedor_articuloid_foreign` FOREIGN KEY (`ArticuloID`) REFERENCES `articulos` (`ArticuloID`),
   ADD CONSTRAINT `articulo_proveedor_proveedorid_foreign` FOREIGN KEY (`ProveedorID`) REFERENCES `proveedores` (`ProveedorID`);
-
---
--- Filtros para la tabla `detalles_solicitud_compras`
---
-ALTER TABLE `detalles_solicitud_compras`
-  ADD CONSTRAINT `detalles_solicitud_compras_articuloid_foreign` FOREIGN KEY (`ArticuloID`) REFERENCES `articulos` (`ArticuloID`),
-  ADD CONSTRAINT `detalles_solicitud_compras_solicitudcompraid_foreign` FOREIGN KEY (`SolicitudCompraID`) REFERENCES `solicitud_compras` (`SolicitudCompraID`);
 
 --
 -- Filtros para la tabla `sectores`
