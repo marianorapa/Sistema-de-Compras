@@ -10,6 +10,6 @@ class Articulo_Proveedor extends Model
     use HasFactory;
     protected $table="articulo_proveedor";
     //Vinculo con la clave primaria de la tabla
-    protected $primaryKey=('ArticuloID'.'ProveedorID');
+    //protected $primaryKey=('ArticuloID','ProveedorID');
     public $timestamps = false;//inhabilita los timestamps
 }

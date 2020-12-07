@@ -15,17 +15,17 @@ class EstadosSolicitudCompras extends Migration
     {
         schema::create('estados_solicitud_compras', function(Blueprint $table){
             $table->string('EstadoID',25);
-            $table->date('FechaHora');
+            $table->dateTime('FechaHora');
             $table->unsignedBigInteger('ResponsableID');
             $table->unsignedBigInteger('AdminComprasID')->nullable();
             $table->unsignedBiginteger('SolicitudCompraID');
-            
+            //fks
             $table->foreign('EstadoID')->references('EstadoID')->on('estados');
-            $table->foreign('FechaHora')->references('FechaHora')->on('estados');
             $table->foreign('SolicitudCompraID')->references('SolicitudCompraID')->on('solicitud_compras');
             $table->foreign('ResponsableID')->references('id')->on('users');
             $table->foreign('AdminComprasID')->references('id')->on('users');
-            $table->primary(array('EstadoID','FechaHora','SolicitudCompraID'));
+            //pk
+            $table->primary(['EstadoID','SolicitudCompraID']);
         });
     }
 

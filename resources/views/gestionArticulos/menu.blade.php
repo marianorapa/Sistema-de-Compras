@@ -21,7 +21,7 @@
                         <th class="text-center w-12">U. de medida</th> 
                         <th class="text-center w-12">U. por bulto</th>
                         <th class="text-center w-12">Punto pedido</th>                            
-                        <th class="text-center w-10">Stcok</th>  
+                        <th class="text-center w-10">Stock</th>  
                         <th class="text-center w-32">Acciones</th>  
                         <th class="text-center w-40">Proveedores</th>  
                     </tr>

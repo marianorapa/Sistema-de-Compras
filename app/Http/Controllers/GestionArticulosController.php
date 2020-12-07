@@ -111,6 +111,9 @@ class GestionArticulosController extends Controller
     * request: proveedores seleccionados a asignar al articulo.
     */
    public function asignarProveedor(Request $request, $articuloID){            
+       //obtengo los datos que necesito año-mes-dia
+       $tiempo=getdate();
+       $fechahoy=$tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'];
       //Se recorren todos los id de proveedores recibidos en el request a partir de la selección de proveedores.
       foreach ($request->id as $proveedorID){
          $vinculo = DB::table('articulo_proveedor')      
@@ -122,8 +125,7 @@ class GestionArticulosController extends Controller
             $articuloProveedor = new Articulo_Proveedor();
             $articuloProveedor->ProveedorID =$proveedorID;
             $articuloProveedor->articuloID =$articuloID;
-            // asigana el año, mes y día.
-            $articuloProveedor->FechaDesde= date("Y-n-j");
+            $articuloProveedor->FechaDesde= $fechahoy;
             $articuloProveedor->FechaHasta=NULL;
             //Se guardan los datos en la BD
             $articuloProveedor->save();                    
@@ -133,7 +135,7 @@ class GestionArticulosController extends Controller
             DB::table('articulo_proveedor')
             ->where('ArticuloID',$articuloID)       
             ->where('ProveedorID',$proveedorID) 
-            ->update(['FechaDesde'=> date("Y-n-j"),'FechaHasta'=>NULL]);       
+            ->update(['FechaDesde'=> $fechahoy,'FechaHasta'=>NULL]);       
          }         
       }
 
@@ -146,11 +148,14 @@ class GestionArticulosController extends Controller
     * Funcion que se encarga de desasignar proveedores para un Articulo
     */
     public function desasignarProveedor(Request $request, $articuloID){
+       //obtengo los datos que necesito año-mes-dia
+       $tiempo=getdate();
+       $fechahoy=$tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'];
       foreach ($request->id as $proveedorID){
          DB::table('articulo_proveedor')
          ->where('ArticuloID',$articuloID)       
          ->where('ProveedorID',$proveedorID)      
-         ->update(['FechaHasta'=> date("Y-n-j")]); 
+         ->update(['FechaHasta'=>$fechahoy]); 
       }
       //Regresa a la vista de consultas
       return redirect()->route('gestionArticulos.menu');

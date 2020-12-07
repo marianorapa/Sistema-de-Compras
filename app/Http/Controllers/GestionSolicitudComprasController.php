@@ -5,8 +5,9 @@ use App\Models\Articulo;
 use App\Models\Detalle_Solicitud_Compras;
 use App\Models\Solicitud_Compras;
 use App\Models\Estado;
-
+use App\Models\Estado_Solicitud_Compras;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -31,13 +32,23 @@ class GestionSolicitudComprasController extends Controller
     public function registrarSolicitudCompra(Request $request){
       //Se crea la Nueva Solicitud de Compra
       $sol=new Solicitud_Compras();
-      $sol->FechaRegistro=date("Y-n-j");
+      $estadoSol= new Estado_Solicitud_Compras();
+      //obtengo fecha del sistema
+      $tiempo=getdate();
+      //obtengo los datos que necesito año-mes-dia
+      $sol->FechaRegistro= $tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'];
       $sol->save();
-      //Se recupera la Solicitud de compra Recien Creada
+      //Se recupera el ID Solicitud de compra Recien Creada
       $sol = DB::table('solicitud_compras')->max('SolicitudCompraID');
+      //guardar datos de estado
+      $estadoSol->SolicitudCompraID=$sol;
+      $estadoSol->EstadoID='Pendiente';
+       //obtengo los datos que necesito año-mes-dia hora(-3 por la zona horaria):minutos:segundos
+      $estadoSol->FechaHora= $tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'].' '.($tiempo['hours']-3).':'.$tiempo['minutes'].':'.$tiempo['seconds'];
+      $estadoSol->ResponsableID=Auth::id();
+
       //Se recorren la cantidades y fecha estimadas de cada articulo solicitado
       //y se iran dando de alta los detalles 
-      
       $i=0;
      foreach ($request->ids as $articuloID){
             $detalle=new Detalle_Solicitud_Compras(); 
@@ -48,6 +59,7 @@ class GestionSolicitudComprasController extends Controller
             $detalle->save();
             $i++;
       }
+      $estadoSol->save();
       //Regresa a la vista de consultas
       return redirect()->route('compras.solicitudCompras');
    }

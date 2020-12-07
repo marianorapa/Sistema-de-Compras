@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-12-2020 a las 21:20:01
+-- Tiempo de generación: 08-12-2020 a las 00:42:36
 -- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.3.23
+-- Versión de PHP: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -43,10 +43,12 @@ CREATE TABLE `articulos` (
 --
 
 INSERT INTO `articulos` (`ArticuloID`, `Activo`, `Descripcion`, `Tipo_embalaje`, `Unidad_medida`, `Unidad_bulto`, `Punto_pedido`, `Stock_disponible`) VALUES
-(1, 1, 'Medidores', 'Bolsa', 'Unidad', 1, 20, 48),
+(1, 1, 'Medidores', 'Bolsa', 'Unidad', 1, 56, 111),
 (3, 1, 'Caño de PVC de 50\'', 'Sin embalaje', 'Unidad', 1, 30, 40),
 (4, 0, 'Caño de PVC de 75\'', 'Sin embalaje', 'Unidad', 1, 30, 50),
-(5, 1, 'Ataud Cooperativo', 'Sin embalaje', 'Unidad', 1, 20, 25);
+(5, 1, 'Ataud Cooperativo', 'Sin embalaje', 'Unidad', 1, 20, 25),
+(6, 0, 'producto angel', 'Bolsa', 'Unidad', 45, 4, 0),
+(7, 1, 'Caño by angel', 'Bolsa', 'Unidad', 3, 9, 0);
 
 -- --------------------------------------------------------
 
@@ -68,7 +70,10 @@ CREATE TABLE `articulo_proveedor` (
 INSERT INTO `articulo_proveedor` (`ArticuloID`, `ProveedorID`, `FechaDesde`, `FechaHasta`) VALUES
 (1, 4, '2020-12-07', NULL),
 (3, 4, '2020-12-07', '2020-12-07'),
-(4, 4, '2020-12-07', '2020-12-07');
+(4, 4, '2020-12-07', '2020-12-07'),
+(6, 1, '2020-12-07', NULL),
+(6, 5, '2020-12-07', NULL),
+(7, 1, '2020-12-07', '2020-12-07');
 
 -- --------------------------------------------------------
 
@@ -77,12 +82,20 @@ INSERT INTO `articulo_proveedor` (`ArticuloID`, `ProveedorID`, `FechaDesde`, `Fe
 --
 
 CREATE TABLE `detalles_solicitud_compras` (
-  `ItemID` bigint(20) UNSIGNED NOT NULL,
   `Cantidad` int(11) NOT NULL,
   `FechaResposicionEstimada` date NOT NULL,
   `ArticuloID` bigint(20) UNSIGNED NOT NULL,
   `SolicitudCompraID` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `detalles_solicitud_compras`
+--
+
+INSERT INTO `detalles_solicitud_compras` (`Cantidad`, `FechaResposicionEstimada`, `ArticuloID`, `SolicitudCompraID`) VALUES
+(5, '2020-12-23', 1, 13),
+(5, '2020-12-16', 3, 13),
+(5, '2020-12-10', 5, 13);
 
 -- --------------------------------------------------------
 
@@ -131,7 +144,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (28, '2020_11_13_210507_articulos', 4),
 (30, '2020_11_12_210614_proveedores', 5),
 (31, '2020_11_23_142300_articulo_proveedor', 6),
-(32, '2020_11_27_004642_detalles_solicitud_compras', 7);
+(39, '2020_12_07_003255_estados', 8),
+(41, '2020_12_07_005002_estados_solicitud_compras', 9),
+(42, '2020_11_27_004642_detalles_solicitud_compras', 10);
 
 -- --------------------------------------------------------
 
@@ -231,7 +246,8 @@ INSERT INTO `proveedores` (`ProveedorID`, `Activo`, `Nombre`, `Razon_social`, `C
 (2, 1, 'OXI Mercedes', 'OXI Mercedes', '2222222', 'RI', 'P.L Brady 442', '2324517955', 'oximercedes@oximercedes.com.ar', 'Suipacha', 'Buenos Aires'),
 (3, 1, 'Silvina Alonso Cobas', 'EscribaniaAlonso Cobas', '27228170084', 'RI', 'Dgo. F Sarmiento 286', '480073', 'ri_03@hotmail.com', 'Suipacha', 'Buenos Aires'),
 (4, 0, 'Nase Hidraulica SRL', 'Nase Hidraulica SRL', '30715868403', 'RI', 'Domingo Milan Nº 620', '01120461030', 'ventas@nasehidraulica.com.ar', 'Villa Madero', 'Buenos Aires'),
-(5, 1, 'Guastavo Araya', 'Letras Araya', '11111111', 'RI', 'P. L Brady 135', '480073', 'letras_araya@gmail.com', 'Suipacha', 'Buenos Aires');
+(5, 1, 'Guastavo Araya', 'Letras Araya', '11111111', 'RI', 'P. L Brady 135', '480073', 'letras_araya@gmail.com', 'Suipacha', 'Buenos Aires'),
+(6, 0, 'Jean Paul', 'ASDFESDFSDFS', '20937040867', 'RI', 'CASA', '02320659459', 'SDAS@GMAIL.COM', 'Tigre', 'BSAS');
 
 -- --------------------------------------------------------
 
@@ -289,7 +305,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('pWKqYaKpf4owMpeiJhrNgEIzNnrNF0161iQO6o23', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiS096MlJFUVdLM2x2c05VRVo2VUozODhpNUc0RG80bXZjMjZmY056YiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly9zaWdjb20udGVzdC9nZXN0aW9uQXJ0aWN1bG9zL21lbnUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkMzVnTUJsa2NrN2lXZWN2eUxNNkxhdXV3ektkbVY4UkRvd1QzM1plc2VjcmVzd2JDeWJmVmEiO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJDM1Z01CbGtjazdpV2VjdnlMTTZMYXV1d3pLZG1WOFJEb3dUMzNaZXNlY3Jlc3diQ3liZlZhIjt9', 1607372393);
+('TCT4HzJA1eYDoUrv0zzlEAtvZF6nH1oZrWftCOgx', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiQnZkT0c0b3Rjc0dVVHk2N0Vablc0Umk0eG5LdnR0RXQyb1JsaEl1VyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9nZXN0aW9uQ29tcHJhcy9zb2xpY2l0dWRlc0NvbXByYXMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkMzVnTUJsa2NrN2lXZWN2eUxNNkxhdXV3ektkbVY4UkRvd1QzM1plc2VjcmVzd2JDeWJmVmEiO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJDM1Z01CbGtjazdpV2VjdnlMTTZMYXV1d3pLZG1WOFJEb3dUMzNaZXNlY3Jlc3diQ3liZlZhIjt9', 1607374167),
+('zXjwAo4eY1bnYqXBRG6fvwIeEeDbAdHREt6wU0Vn', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiQkk1MlM1VkJ0ZXNlOXAwb2NtV2tsSGJGSGdCNVhrY3V4ODhveXZoNiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDM1Z01CbGtjazdpV2VjdnlMTTZMYXV1d3pLZG1WOFJEb3dUMzNaZXNlY3Jlc3diQ3liZlZhIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCQzNWdNQmxrY2s3aVdlY3Z5TE02TGF1dXd6S2RtVjhSRG93VDMzWmVzZWNyZXN3YkN5YmZWYSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9nZXN0aW9uQ29tcHJhcy9zb2xpY2l0dWRlc0NvbXByYXMiO319', 1607384457);
 
 -- --------------------------------------------------------
 
@@ -307,7 +324,7 @@ CREATE TABLE `solicitud_compras` (
 --
 
 INSERT INTO `solicitud_compras` (`SolicitudCompraID`, `FechaRegistro`) VALUES
-(1, '2020-11-27');
+(13, '2020-12-07');
 
 -- --------------------------------------------------------
 
@@ -360,8 +377,7 @@ ALTER TABLE `articulo_proveedor`
 -- Indices de la tabla `detalles_solicitud_compras`
 --
 ALTER TABLE `detalles_solicitud_compras`
-  ADD PRIMARY KEY (`ItemID`),
-  ADD KEY `detalles_solicitud_compras_articuloid_foreign` (`ArticuloID`),
+  ADD PRIMARY KEY (`ArticuloID`,`SolicitudCompraID`),
   ADD KEY `detalles_solicitud_compras_solicitudcompraid_foreign` (`SolicitudCompraID`);
 
 --
@@ -454,13 +470,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `articulos`
 --
 ALTER TABLE `articulos`
-  MODIFY `ArticuloID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT de la tabla `detalles_solicitud_compras`
---
-ALTER TABLE `detalles_solicitud_compras`
-  MODIFY `ItemID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `ArticuloID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
@@ -472,7 +482,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT de la tabla `personal_access_tokens`
@@ -484,7 +494,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `ProveedorID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ProveedorID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `sectores`
@@ -496,7 +506,7 @@ ALTER TABLE `sectores`
 -- AUTO_INCREMENT de la tabla `solicitud_compras`
 --
 ALTER TABLE `solicitud_compras`
-  MODIFY `SolicitudCompraID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `SolicitudCompraID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `users`

@@ -14,7 +14,6 @@ class DetallesSolicitudCompras extends Migration
     public function up()
     {
         schema::create('detalles_solicitud_compras', function(Blueprint $table){
-          
             $table->integer('Cantidad');
             $table->Date('FechaResposicionEstimada');
             $table->unsignedBiginteger('ArticuloID');

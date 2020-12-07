@@ -14,9 +14,7 @@ class Estados extends Migration
     public function up()
     {
         schema::create('estados', function(Blueprint $table){
-            $table->string('EstadoID',25);
-            $table->Date('FechaHora'); 
-            $table->primary(['EstadoID','FechaHora']);
+            $table->string('EstadoID',25)->primary('EstadoID');
         });
     }
 

@@ -9,6 +9,6 @@ class Estado_Solicitud_Compras extends Model
 {
     use HasFactory;
     protected $table="estados_solicitud_compras";
-    protected $primaryKey= array('EstadoID','FechaHora','SolicitudCompraID');
+    //protected $primaryKey= array('EstadoID','FechaHora','SolicitudCompraID');
     public $timestamps = false;//inhabilita los timestamps
 }

@@ -13,7 +13,7 @@
       <div class="col-sm-4 overflow-hidden shadow-md sm:rounded-lg bg-white">  
           <h3 class="text-center">Solicitud de Compra:</h3>
           {{--<p class="text-center">ID {{$soli->SolicitudCompraID}}</p>--}}  
-          <p class="text-center">Fecha: {{date("Y-n-j")}}</p> 
+          <p class="text-center">Fecha: {{ getdate()['year'].'-'.getdate()['mon'].'-'.getdate()['mday']}}</p> 
       </div> 
     </div> 
   </div>
@@ -35,12 +35,14 @@
           </thead>
           <tbody>
             @foreach ($articulos as $a) 
+            @if ( $a->Activo == 1 )
               <tr>
                 <th></th>
                   <td>{{$a->ArticuloID}}</td>
                   <td>{{$a->Descripcion}}</td>
                   {{--<td class="text-center"><input type="checkbox" id="{{$a->ArticuloID}}" name="ArticulosID[]" value="{{$a->ArticuloID}}"></td>            --}}
-              </tr>                                   
+              </tr>                
+              @endif                   
             @endforeach                  
           </tbody>         
         </table>                      
