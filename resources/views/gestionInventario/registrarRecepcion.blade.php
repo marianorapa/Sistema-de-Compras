@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-bold text-xl text-blue-800 leading-tight">
-            {{ __('Establecer Punto de Pedido') }}
+            {{ __('Registrar Recepción de Artículos') }}
         </h2>
     </x-slot>
 
@@ -18,7 +18,7 @@
                     <tr class="bg-blue-50">           
                         <th class="text-center w-2">ID</th>
                         <th class="w-40">Artículo</th>          
-                        <th class="text-center w-12">Punto pedido</th>                                                
+                        <th class="text-center w-12">Stock</th>                                                
                         <th class="text-center w-32">Acción</th>                     
                     </tr>
                 </thead>
@@ -28,13 +28,13 @@
                     <tr>                
                         <td class="text-center">{{$a->ArticuloID}}</td>                        
                         <td>{{$a->Descripcion}}</td>                 
-                        <td class="text-center">{{$a->Punto_pedido}}</td>             
+                        <td class="text-center">{{$a->Stock_disponible}}</td>             
                         <td class="text-center">
-                            <!-- Boton trigger modal Establecer -->
-                            <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modalEstablecer" 
+                            <!-- Boton trigger modal Registrar-->
+                            <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#modalRegistrar" 
                             data-id={{$a->ArticuloID}}
                             data-descripcion="{{$a->Descripcion}}"
-                            data-punto_pedido={{$a->Punto_pedido}}
+                            data-stock={{$a->Stock_disponible}}
                             >
                                 Mostrar
                             </button>                                           
@@ -48,17 +48,17 @@
     </div>
 </x-app-layout>
 
-<!-- Modal editar -->
-<div class="modal fade" id="modalEstablecer" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- Modal Registrar -->
+<div class="modal fade" id="modalRegistrar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Establecer Punto de Pedido </h5>        
+          <h5 class="modal-title" id="exampleModalLongTitle">Registrar recepción</h5>        
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action={{route('gestionArticulos.establecer')}} method="POST">
+        <form action={{route('gestionArticulos.ajustar')}} method="POST">
         @csrf 
         @method('put')
         <div class="modal-body">                
@@ -70,19 +70,19 @@
           </div>             
           <div class="form-group row">                         
             <div class="col">
-              <label for="#punto_pedido">Punto de pedido anterior</label>
+              <label for="#punto_pedido" class="ml-5">Stock actual</label>
               <h5 class="text-center text-cool-gray-500"></h5>           
             </div>  
             <div class="col">
-                <label for="#punto_pedido">Punto de pedido nuevo</label>
-                <input class="form-control ml-4" type="number" id="punto_pedido_nuevo" name="punto_pedido_nuevo" min="0" max="100">  
+                <label for="#ajuste" class="ml-4">Valor de Ajuste</label>
+                <input class="form-control ml-4" type="number" id="ajuste" name="ajuste" min="0" max="100">  
               </div>            
           </div> 
         </div>
   
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>        
-          <button type="submit" class="btn btn-primary">Establecer</button>
+          <button type="submit" class="btn btn-primary">Registrar</button>
         </div>
       </form>
       </div>
@@ -92,7 +92,7 @@
 @livewireStyles
 
 <style type="text/css">
-#punto_pedido_anterior, #punto_pedido_nuevo {
+#ajuste {
   width: 7em;
 }
 </style>
@@ -125,16 +125,15 @@
 
 <!--Script del modal establecer -->
 <script> 
-    $('#modalEstablecer').on('show.bs.modal', function(e) {    
+    $('#modalRegistrar').on('show.bs.modal', function(e) {    
       var id = $(e.relatedTarget).data('id');  
       var descripcion = $(e.relatedTarget).data('descripcion');     
-      var punto_pedido =  $(e.relatedTarget).data('punto_pedido');  
+      var stock =  $(e.relatedTarget).data('stock');  
       $(e.currentTarget).find('#id').val(id);
       $(".modal-body h3").text(descripcion);      
-      $(".modal-body h5").text(punto_pedido);   
+      $(".modal-body h5").text(stock);   
     });
   </script>
-
 
 
 

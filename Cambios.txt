@@ -1,13 +1,3 @@
 Fecha: 28/11/2020
 
-. Incorporación de la función Datatables Bootstrap con la extensión select.
-Fuente: 
-https://www.gyrocode.com/articles/jquery-datatables-checkboxes/comment-page-4/#comments
-
-Se incorporó la traducción de idioma a español para las tablas
-Fuente:
-https://datatables.net/forums/discussion/53081/language-is-not-working
-
-
-Fecha: 01/12/2020 y 02/12/2020
-. Se incorporaron las funciones de vincular y desvincular proveedores a articulo.
+. Incorporación de las funciones editar y eliminación lógica de artículos.
