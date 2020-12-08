@@ -35,39 +35,18 @@ class GestionSolicitudComprasController extends Controller
       $estadoSol= new Estado_Solicitud_Compras();
       //obtengo fecha del sistema
       $tiempo=getdate();
-      if($tiempo['hours']>2){
-        $fechahoy=$tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'];
-      }else{
-        $fechahoy=$tiempo['year'].'-'. $tiempo['mon'].'-'.($tiempo['mday']-1);
-      }
-      $sol->FechaRegistro= $fechahoy;
+      //obtengo los datos que necesito año-mes-dia
+      //$sol->FechaRegistro= $tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'];
       $sol->FechaRegistro=date("Y-n-j");
       $sol->save();
-      
-      //obtengo los datos que necesito año-mes-dia hora(-3 por la zona horaria):minutos:segundos
-      switch($tiempo['hours']){
-         case 0:
-            $fechahoy=$fechahoy.' 21'.':'.$tiempo['minutes'].':'.$tiempo['seconds'];
-         break;
-         case 1:
-            $fechahoy=$fechahoy.' 22'.':'.$tiempo['minutes'].':'.$tiempo['seconds'];
-         break;
-         case 2:
-            $fechahoy=$fechahoy.' 23'.':'.$tiempo['minutes'].':'.$tiempo['seconds'];
-         break;
-         case 3:
-            $fechahoy=$fechahoy.' 00'.':'.$tiempo['minutes'].':'.$tiempo['seconds'];
-         break;
-         
-         default:$fechahoy=$fechahoy.' '.($tiempo['hours']-3).':'.$tiempo['minutes'].':'.$tiempo['seconds'];
-      }
-     
       //Se recupera el ID Solicitud de compra Recien Creada
       $sol = DB::table('solicitud_compras')->max('SolicitudCompraID');
       //guardar datos de estado
       $estadoSol->SolicitudCompraID=$sol;
       $estadoSol->EstadoID='Pendiente';
-      $estadoSol->FechaHora=$fechahoy; 
+       //obtengo los datos que necesito año-mes-dia hora(-3 por la zona horaria):minutos:segundos
+      //$estadoSol->FechaHora= $tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'].' '.($tiempo['hours']-3).':'.$tiempo['minutes'].':'.$tiempo['seconds'];
+      $estadoSol->FechaHora=date("Y-n-j");
       //Obtener ID del usuario actualmente logueado
       $estadoSol->ResponsableID=Auth::id();
 
@@ -99,11 +78,5 @@ class GestionSolicitudComprasController extends Controller
       return view('/gestionCompras/solicitudCompras/cantidadArticulos')
       ->with('articulos' ,$artSolicitados);
    }
-
-
-   public function editarSolicitudCompra(Request $request){
-      return $request;
-   }
-
 
 }
