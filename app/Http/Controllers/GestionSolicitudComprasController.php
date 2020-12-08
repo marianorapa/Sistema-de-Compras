@@ -17,11 +17,10 @@ class GestionSolicitudComprasController extends Controller
    public function index(){
       $solicitudes = Solicitud_Compras::all();
       return view('/gestionCompras/solicitudCompras/menu')
-      ->with('solicitudes' ,$solicitudes);
-   }
-    
-   public function seleccionarArticulos(){
+      ->with('solicitudes' ,$solicitudes);      
+   } 
 
+   public function seleccionarArticulos(){
        $solCompra = Solicitud_Compras::max('SolicitudCompraID');
        $articulos = Articulo::all();
        return view('/gestionCompras/solicitudCompras/seleccionarArticulos')
@@ -79,4 +78,54 @@ class GestionSolicitudComprasController extends Controller
       ->with('articulos' ,$artSolicitados);
    }
 
+   /**
+    * Función que recupera el detalle de una solicitud de compra particular y retorna la información
+    * a la vista correspondiente para su visualización.
+    */
+   public function detalle(Request $request){      
+      $solicitud = $request->id;
+      
+      $fecha = DB::table('solicitud_compras')
+      ->where('SolicitudCompraID',$request->id)->value('FechaRegistro');      
+
+      $estado = DB::table('estados_solicitud_compras')
+      ->where('SolicitudCompraID',$request->id)->value('EstadoID');
+      
+      $usuarioID = DB::table('estados_solicitud_compras')
+      ->where('SolicitudCompraID',$request->id)->value('ResponsableID');
+      
+      $usuario = DB::table('users')
+      ->where('id',$usuarioID)->value('name');
+
+      $detalle = DB::table('detalles_solicitud_compras')
+      ->join('articulos','detalles_solicitud_compras.ArticuloID','=','articulos.ArticuloID')
+      ->where('SolicitudCompraID',$request->id)->get();
+
+      return view('/gestionCompras/solicitudCompras/detalle')
+      ->with('detalle' ,$detalle)
+      ->with('estado', $estado)
+      ->with('solicitud', $solicitud)
+      ->with('fecha', $fecha)
+      ->with('usuario', $usuario);
+   }
+
+   /**
+    * Función que elimina físicamente una solicitud de compra siempre que la misma se encuentre en estado PENDIENTE
+    */
+   public function eliminar(Request $request){
+      $estado = DB::table('estados_solicitud_compras')
+      ->where('SolicitudCompraID',$request->id)->value('EstadoID');
+      if($estado=='Pendiente')
+         $mensaje= 'Solicitud de Compra eliminada exitosamente.';
+
+      $solicitudes = Solicitud_Compras::all();      
+      /*return view('/gestionCompras/solicitudCompras/menu')
+      ->with('solicitudes' ,$solicitudes) 
+      ->with('success','Solicitud de Compra eliminada exitosamente.');*/
+      //Regresa a la vista de consultas
+      return redirect()->route('compras.solicitudCompras')->with('success','Solicitud de Compra eliminada exitosamente.');
+   }
+
+
 }
+
