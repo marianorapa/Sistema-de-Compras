@@ -113,7 +113,12 @@ class GestionArticulosController extends Controller
    public function asignarProveedor(Request $request, $articuloID){            
        //obtengo los datos que necesito año-mes-dia
        $tiempo=getdate();
-       $fechahoy=$tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'];
+       if($tiempo['hours']>2){
+         $fechahoy=$tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'];
+       }else{
+         $fechahoy=$tiempo['year'].'-'. $tiempo['mon'].'-'.($tiempo['mday']-1);
+       }
+       
       //Se recorren todos los id de proveedores recibidos en el request a partir de la selección de proveedores.
       foreach ($request->id as $proveedorID){
          $vinculo = DB::table('articulo_proveedor')      
@@ -149,8 +154,13 @@ class GestionArticulosController extends Controller
     */
     public function desasignarProveedor(Request $request, $articuloID){
        //obtengo los datos que necesito año-mes-dia
-       $tiempo=getdate();
-       $fechahoy=$tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'];
+      //obtengo los datos que necesito año-mes-dia
+      $tiempo=getdate();
+      if($tiempo['hours']>2){
+        $fechahoy=$tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'];
+      }else{
+        $fechahoy=$tiempo['year'].'-'. $tiempo['mon'].'-'.($tiempo['mday']-1);
+      }
       foreach ($request->id as $proveedorID){
          DB::table('articulo_proveedor')
          ->where('ArticuloID',$articuloID)       
