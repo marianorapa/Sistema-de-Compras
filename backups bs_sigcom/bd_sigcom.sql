@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-12-2020 a las 00:42:36
+-- Tiempo de generación: 08-12-2020 a las 02:28:41
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.11
 
@@ -94,8 +94,72 @@ CREATE TABLE `detalles_solicitud_compras` (
 
 INSERT INTO `detalles_solicitud_compras` (`Cantidad`, `FechaResposicionEstimada`, `ArticuloID`, `SolicitudCompraID`) VALUES
 (5, '2020-12-23', 1, 13),
+(3, '2020-12-29', 1, 14),
+(3, '2020-12-29', 1, 15),
+(3, '2020-12-29', 1, 16),
 (5, '2020-12-16', 3, 13),
-(5, '2020-12-10', 5, 13);
+(3, '2020-12-23', 3, 14),
+(3, '2020-12-23', 3, 15),
+(3, '2020-12-23', 3, 16),
+(5, '2020-12-10', 5, 13),
+(3, '2020-12-10', 5, 14),
+(3, '2020-12-10', 5, 15),
+(3, '2020-12-10', 5, 16);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `deta_soli_presu`
+--
+
+CREATE TABLE `deta_soli_presu` (
+  `Cantidad` int(11) NOT NULL,
+  `ArtiID` bigint(20) UNSIGNED NOT NULL,
+  `SoliPresuID` bigint(20) UNSIGNED NOT NULL,
+  `ProveID` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estados`
+--
+
+CREATE TABLE `estados` (
+  `EstadoID` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `estados`
+--
+
+INSERT INTO `estados` (`EstadoID`) VALUES
+('Aprobado'),
+('Finalizado'),
+('Pendiente'),
+('Procesado'),
+('Rechazado');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estados_solicitud_compras`
+--
+
+CREATE TABLE `estados_solicitud_compras` (
+  `EstadoID` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `FechaHora` datetime NOT NULL,
+  `ResponsableID` bigint(20) UNSIGNED NOT NULL,
+  `AdminComprasID` bigint(20) UNSIGNED DEFAULT NULL,
+  `SolicitudCompraID` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `estados_solicitud_compras`
+--
+
+INSERT INTO `estados_solicitud_compras` (`EstadoID`, `FechaHora`, `ResponsableID`, `AdminComprasID`, `SolicitudCompraID`) VALUES
+('Pendiente', '2020-12-08 00:00:00', 1, NULL, 16);
 
 -- --------------------------------------------------------
 
@@ -144,9 +208,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (28, '2020_11_13_210507_articulos', 4),
 (30, '2020_11_12_210614_proveedores', 5),
 (31, '2020_11_23_142300_articulo_proveedor', 6),
-(39, '2020_12_07_003255_estados', 8),
-(41, '2020_12_07_005002_estados_solicitud_compras', 9),
-(42, '2020_11_27_004642_detalles_solicitud_compras', 10);
+(42, '2020_11_27_004642_detalles_solicitud_compras', 10),
+(43, '2020_12_07_003255_estados', 11),
+(44, '2020_12_07_005002_estados_solicitud_compras', 11),
+(45, '2020_12_07_214234_solicitudes_presupuestos', 12),
+(46, '2020_12_07_220349_solicitudes_presupuesto_proveedores', 12),
+(47, '2020_12_07_234508_detalles_solicitud_presupuestos', 12),
+(48, '2020_12_07_235609_presupuestos', 12);
 
 -- --------------------------------------------------------
 
@@ -216,6 +284,22 @@ CREATE TABLE `personas` (
 
 INSERT INTO `personas` (`Legajo`, `Nombre`, `Apellido`, `DNI`, `Cuil`, `telefono`, `Mail`, `Direccion`, `created_at`, `updated_at`) VALUES
 (0, 'Maximiliano ', 'Robledo', '33558688', '20335586884', '0232415474109', 'maxirobledo@gmail.com', '1º de Mayo Nº 248', '2020-11-22 20:51:18', '2020-11-22 20:51:18');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `presupuestos`
+--
+
+CREATE TABLE `presupuestos` (
+  `PresupuestoID` bigint(20) UNSIGNED NOT NULL,
+  `FechaRegistro` date NOT NULL,
+  `FechaValidez` date DEFAULT NULL,
+  `DescuentoTotal` decimal(8,2) NOT NULL,
+  `Total` decimal(8,2) NOT NULL,
+  `ProveID` bigint(20) UNSIGNED NOT NULL,
+  `SoliPresuID` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -306,7 +390,18 @@ CREATE TABLE `sessions` (
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
 ('TCT4HzJA1eYDoUrv0zzlEAtvZF6nH1oZrWftCOgx', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiQnZkT0c0b3Rjc0dVVHk2N0Vablc0Umk0eG5LdnR0RXQyb1JsaEl1VyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9nZXN0aW9uQ29tcHJhcy9zb2xpY2l0dWRlc0NvbXByYXMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6MTc6InBhc3N3b3JkX2hhc2hfd2ViIjtzOjYwOiIkMnkkMTAkMzVnTUJsa2NrN2lXZWN2eUxNNkxhdXV3ektkbVY4UkRvd1QzM1plc2VjcmVzd2JDeWJmVmEiO3M6MjE6InBhc3N3b3JkX2hhc2hfc2FuY3R1bSI7czo2MDoiJDJ5JDEwJDM1Z01CbGtjazdpV2VjdnlMTTZMYXV1d3pLZG1WOFJEb3dUMzNaZXNlY3Jlc3diQ3liZlZhIjt9', 1607374167),
-('zXjwAo4eY1bnYqXBRG6fvwIeEeDbAdHREt6wU0Vn', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiQkk1MlM1VkJ0ZXNlOXAwb2NtV2tsSGJGSGdCNVhrY3V4ODhveXZoNiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDM1Z01CbGtjazdpV2VjdnlMTTZMYXV1d3pLZG1WOFJEb3dUMzNaZXNlY3Jlc3diQ3liZlZhIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCQzNWdNQmxrY2s3aVdlY3Z5TE02TGF1dXd6S2RtVjhSRG93VDMzWmVzZWNyZXN3YkN5YmZWYSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9nZXN0aW9uQ29tcHJhcy9zb2xpY2l0dWRlc0NvbXByYXMiO319', 1607384457);
+('zXjwAo4eY1bnYqXBRG6fvwIeEeDbAdHREt6wU0Vn', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiQkk1MlM1VkJ0ZXNlOXAwb2NtV2tsSGJGSGdCNVhrY3V4ODhveXZoNiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjE3OiJwYXNzd29yZF9oYXNoX3dlYiI7czo2MDoiJDJ5JDEwJDM1Z01CbGtjazdpV2VjdnlMTTZMYXV1d3pLZG1WOFJEb3dUMzNaZXNlY3Jlc3diQ3liZlZhIjtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMCQzNWdNQmxrY2s3aVdlY3Z5TE02TGF1dXd6S2RtVjhSRG93VDMzWmVzZWNyZXN3YkN5YmZWYSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTU6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9nZXN0aW9uQ29tcHJhcy9zb2xpY2l0dWRlc0NvbXByYXMiO319', 1607390098);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `solicitudes_presupuestos`
+--
+
+CREATE TABLE `solicitudes_presupuestos` (
+  `SolicitudPresupuestoID` bigint(20) UNSIGNED NOT NULL,
+  `FechaRegistro` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -324,7 +419,22 @@ CREATE TABLE `solicitud_compras` (
 --
 
 INSERT INTO `solicitud_compras` (`SolicitudCompraID`, `FechaRegistro`) VALUES
-(13, '2020-12-07');
+(13, '2020-12-07'),
+(14, '2020-12-08'),
+(15, '2020-12-08'),
+(16, '2020-12-08');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `soli_presu_prove`
+--
+
+CREATE TABLE `soli_presu_prove` (
+  `SolicitudPresupuestoID` bigint(20) UNSIGNED NOT NULL,
+  `ProveedorID` bigint(20) UNSIGNED NOT NULL,
+  `FechaRegistro` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -381,6 +491,29 @@ ALTER TABLE `detalles_solicitud_compras`
   ADD KEY `detalles_solicitud_compras_solicitudcompraid_foreign` (`SolicitudCompraID`);
 
 --
+-- Indices de la tabla `deta_soli_presu`
+--
+ALTER TABLE `deta_soli_presu`
+  ADD PRIMARY KEY (`ArtiID`,`SoliPresuID`,`ProveID`),
+  ADD KEY `deta_soli_presu_solipresuid_foreign` (`SoliPresuID`),
+  ADD KEY `deta_soli_presu_proveid_foreign` (`ProveID`);
+
+--
+-- Indices de la tabla `estados`
+--
+ALTER TABLE `estados`
+  ADD PRIMARY KEY (`EstadoID`);
+
+--
+-- Indices de la tabla `estados_solicitud_compras`
+--
+ALTER TABLE `estados_solicitud_compras`
+  ADD PRIMARY KEY (`EstadoID`,`SolicitudCompraID`),
+  ADD KEY `estados_solicitud_compras_solicitudcompraid_foreign` (`SolicitudCompraID`),
+  ADD KEY `estados_solicitud_compras_responsableid_foreign` (`ResponsableID`),
+  ADD KEY `estados_solicitud_compras_admincomprasid_foreign` (`AdminComprasID`);
+
+--
 -- Indices de la tabla `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -420,6 +553,14 @@ ALTER TABLE `personas`
   ADD PRIMARY KEY (`Legajo`);
 
 --
+-- Indices de la tabla `presupuestos`
+--
+ALTER TABLE `presupuestos`
+  ADD PRIMARY KEY (`PresupuestoID`),
+  ADD KEY `presupuestos_solipresuid_foreign` (`SoliPresuID`),
+  ADD KEY `presupuestos_proveid_foreign` (`ProveID`);
+
+--
 -- Indices de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
@@ -447,10 +588,23 @@ ALTER TABLE `sessions`
   ADD KEY `sessions_last_activity_index` (`last_activity`);
 
 --
+-- Indices de la tabla `solicitudes_presupuestos`
+--
+ALTER TABLE `solicitudes_presupuestos`
+  ADD PRIMARY KEY (`SolicitudPresupuestoID`);
+
+--
 -- Indices de la tabla `solicitud_compras`
 --
 ALTER TABLE `solicitud_compras`
   ADD PRIMARY KEY (`SolicitudCompraID`);
+
+--
+-- Indices de la tabla `soli_presu_prove`
+--
+ALTER TABLE `soli_presu_prove`
+  ADD PRIMARY KEY (`ProveedorID`,`SolicitudPresupuestoID`),
+  ADD KEY `soli_presu_prove_solicitudpresupuestoid_foreign` (`SolicitudPresupuestoID`);
 
 --
 -- Indices de la tabla `users`
@@ -482,13 +636,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT de la tabla `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `presupuestos`
+--
+ALTER TABLE `presupuestos`
+  MODIFY `PresupuestoID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
@@ -503,10 +663,16 @@ ALTER TABLE `sectores`
   MODIFY `SectorID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `solicitudes_presupuestos`
+--
+ALTER TABLE `solicitudes_presupuestos`
+  MODIFY `SolicitudPresupuestoID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `solicitud_compras`
 --
 ALTER TABLE `solicitud_compras`
-  MODIFY `SolicitudCompraID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `SolicitudCompraID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -533,10 +699,41 @@ ALTER TABLE `detalles_solicitud_compras`
   ADD CONSTRAINT `detalles_solicitud_compras_solicitudcompraid_foreign` FOREIGN KEY (`SolicitudCompraID`) REFERENCES `solicitud_compras` (`SolicitudCompraID`);
 
 --
+-- Filtros para la tabla `deta_soli_presu`
+--
+ALTER TABLE `deta_soli_presu`
+  ADD CONSTRAINT `deta_soli_presu_artiid_foreign` FOREIGN KEY (`ArtiID`) REFERENCES `articulos` (`ArticuloID`),
+  ADD CONSTRAINT `deta_soli_presu_proveid_foreign` FOREIGN KEY (`ProveID`) REFERENCES `proveedores` (`ProveedorID`),
+  ADD CONSTRAINT `deta_soli_presu_solipresuid_foreign` FOREIGN KEY (`SoliPresuID`) REFERENCES `solicitudes_presupuestos` (`SolicitudPresupuestoID`);
+
+--
+-- Filtros para la tabla `estados_solicitud_compras`
+--
+ALTER TABLE `estados_solicitud_compras`
+  ADD CONSTRAINT `estados_solicitud_compras_admincomprasid_foreign` FOREIGN KEY (`AdminComprasID`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `estados_solicitud_compras_estadoid_foreign` FOREIGN KEY (`EstadoID`) REFERENCES `estados` (`EstadoID`),
+  ADD CONSTRAINT `estados_solicitud_compras_responsableid_foreign` FOREIGN KEY (`ResponsableID`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `estados_solicitud_compras_solicitudcompraid_foreign` FOREIGN KEY (`SolicitudCompraID`) REFERENCES `solicitud_compras` (`SolicitudCompraID`);
+
+--
+-- Filtros para la tabla `presupuestos`
+--
+ALTER TABLE `presupuestos`
+  ADD CONSTRAINT `presupuestos_proveid_foreign` FOREIGN KEY (`ProveID`) REFERENCES `proveedores` (`ProveedorID`),
+  ADD CONSTRAINT `presupuestos_solipresuid_foreign` FOREIGN KEY (`SoliPresuID`) REFERENCES `solicitudes_presupuestos` (`SolicitudPresupuestoID`);
+
+--
 -- Filtros para la tabla `sectores`
 --
 ALTER TABLE `sectores`
   ADD CONSTRAINT `sectores_persona_a_cargo_foreign` FOREIGN KEY (`Persona_a_cargo`) REFERENCES `personas` (`Legajo`);
+
+--
+-- Filtros para la tabla `soli_presu_prove`
+--
+ALTER TABLE `soli_presu_prove`
+  ADD CONSTRAINT `soli_presu_prove_proveedorid_foreign` FOREIGN KEY (`ProveedorID`) REFERENCES `proveedores` (`ProveedorID`),
+  ADD CONSTRAINT `soli_presu_prove_solicitudpresupuestoid_foreign` FOREIGN KEY (`SolicitudPresupuestoID`) REFERENCES `solicitudes_presupuestos` (`SolicitudPresupuestoID`);
 
 --
 -- Filtros para la tabla `users`

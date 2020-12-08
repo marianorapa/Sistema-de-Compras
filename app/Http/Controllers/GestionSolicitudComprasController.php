@@ -36,7 +36,8 @@ class GestionSolicitudComprasController extends Controller
       //obtengo fecha del sistema
       $tiempo=getdate();
       //obtengo los datos que necesito año-mes-dia
-      $sol->FechaRegistro= $tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'];
+      //$sol->FechaRegistro= $tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'];
+      $sol->FechaRegistro=date("Y-n-j");
       $sol->save();
       //Se recupera el ID Solicitud de compra Recien Creada
       $sol = DB::table('solicitud_compras')->max('SolicitudCompraID');
@@ -44,7 +45,9 @@ class GestionSolicitudComprasController extends Controller
       $estadoSol->SolicitudCompraID=$sol;
       $estadoSol->EstadoID='Pendiente';
        //obtengo los datos que necesito año-mes-dia hora(-3 por la zona horaria):minutos:segundos
-      $estadoSol->FechaHora= $tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'].' '.($tiempo['hours']-3).':'.$tiempo['minutes'].':'.$tiempo['seconds'];
+      //$estadoSol->FechaHora= $tiempo['year'].'-'. $tiempo['mon'].'-'.$tiempo['mday'].' '.($tiempo['hours']-3).':'.$tiempo['minutes'].':'.$tiempo['seconds'];
+      $estadoSol->FechaHora=date("Y-n-j");
+      //Obtener ID del usuario actualmente logueado
       $estadoSol->ResponsableID=Auth::id();
 
       //Se recorren la cantidades y fecha estimadas de cada articulo solicitado
