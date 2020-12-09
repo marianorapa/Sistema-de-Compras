@@ -15,11 +15,22 @@
   </div> 
   <div class="container h-auto sm:rounded-md shadow-md mx-auto mt-2 p-2 bg-white">     
     @if (session('success'))
-    <div class="alert alert-success" role="success">
-        {{ session('success') }}
-    </div> 
-    @endif 
-      <table id="example" class="table table-hover table-bordered" style="width:100%">
+      <div class="alert alert-success" role="success">
+        <strong>{{ session('success') }}</strong>
+        <button type="button" class="close" data-dismiss="alert" alert-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>       
+    @endif
+    @if (session('error'))
+    <div class="alert alert-danger" role="alert">
+      <strong>{{ session('error') }}</strong>
+      <button type="button" class="close" data-dismiss="alert" alert-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>       
+    @endif
+    <table id="example" class="table table-hover table-bordered" style="width:100%">
           <thead>         
               <tr class="bg-blue-50">           
                   <th class="text-center w-4" name="id">ID</th>                 
@@ -36,13 +47,13 @@
                   <td class="text-center" name="id">{{$s->SolicitudCompraID}}</td>
                   <td class="text-center" name="fecha">{{$s->FechaRegistro}}</td>            
                   <td class="text-center">                 
-                  <!-- Boton trigger modal eliminar -->
-                  <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalEliminar" 
-                  data-id={{$s->SolicitudCompraID}}
-                  >
-                    Eliminar
-                  </button>     
-                  <button type="submit" class="btn btn-outline-success btn-sm">Ver detalle</button>
+                    <!-- Boton trigger modal eliminar -->
+                    <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalEliminar" data-id={{$s->SolicitudCompraID}}>
+                      Eliminar
+                    </button>     
+                    <button type="submit" class="btn btn-outline-success btn-sm">
+                      Ver detalle
+                    </button>
                   </td>   
                 </form>                   
               </tr>                                                     
@@ -101,7 +112,7 @@
 <!--Script del modal eliminar -->
 <script> 
  $('#modalEliminar').on('show.bs.modal', function(e) {
-    var id = $(e.relatedTarget).data('descripcion');    
+    var id = $(e.relatedTarget).data('id');    
     $(e.currentTarget).find('#id').val(id);
   });
 </script>

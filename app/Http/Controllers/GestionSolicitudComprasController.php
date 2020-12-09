@@ -115,15 +115,19 @@ class GestionSolicitudComprasController extends Controller
    public function eliminar(Request $request){
       $estado = DB::table('estados_solicitud_compras')
       ->where('SolicitudCompraID',$request->id)->value('EstadoID');
-      if($estado=='Pendiente')
-         $mensaje= 'Solicitud de Compra eliminada exitosamente.';
-
-      $solicitudes = Solicitud_Compras::all();      
-      /*return view('/gestionCompras/solicitudCompras/menu')
-      ->with('solicitudes' ,$solicitudes) 
-      ->with('success','Solicitud de Compra eliminada exitosamente.');*/
-      //Regresa a la vista de consultas
-      return redirect()->route('compras.solicitudCompras')->with('success','Solicitud de Compra eliminada exitosamente.');
+      if($estado == 'Pendiente'){   
+         //Se elimina de la tabla estados_solicitud_compras   
+         DB::table('estados_solicitud_compras')
+         ->where('SolicitudCompraID',$request->id)->delete();
+         //Se elimina de la tabla detalles
+         DB::table('detalles_solicitud_compras')
+         ->where('SolicitudCompraID',$request->id)->delete();
+         //Por último se elimina la solicitud de la tabla solicitudes
+         DB::table('solicitud_compras')
+         ->where('SolicitudCompraID',$request->id)->delete(); 
+         return redirect()->route('compras.solicitudCompras')->with('success','Solicitud de Compra eliminada exitosamente.');
+      }else
+         return redirect()->route('compras.solicitudCompras')->with('error','No se puede eliminar la Solicitud de Compra porque ya fue procesada.'); 
    }
 
 
