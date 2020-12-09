@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Models\Articulo;
 use App\Models\Detalle_Solicitud_Compras;
 use App\Models\Solicitud_Compras;
-use App\Models\Estado;
 use App\Models\Estado_Solicitud_Compras;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -126,6 +125,38 @@ class GestionSolicitudComprasController extends Controller
       return redirect()->route('compras.solicitudCompras')->with('success','Solicitud de Compra eliminada exitosamente.');
    }
 
+   public function editarSolicitudCompra($solicitud){
+      
+      $fecha = DB::table('solicitud_compras')
+      ->where('SolicitudCompraID',$solicitud)->value('FechaRegistro');      
 
+      $estado = DB::table('estados_solicitud_compras')
+      ->where('SolicitudCompraID',$solicitud)->value('EstadoID');
+      
+      $usuarioID = DB::table('estados_solicitud_compras')
+      ->where('SolicitudCompraID',$solicitud)->value('ResponsableID');
+
+      $detalle = DB::table('detalles_solicitud_compras')
+      ->join('articulos','detalles_solicitud_compras.ArticuloID','=','articulos.ArticuloID')
+      ->where('SolicitudCompraID',$solicitud)->get();
+
+      return view('/gestionCompras/solicitudCompras/editSolicitudCompra')
+      ->with('detalle' ,$detalle)
+      ->with('estado', $estado)
+      ->with('solicitud', $solicitud)
+      ->with('fecha', $fecha);
+   }
+
+   public function actualizar(Request $request, $solicitud){
+      $i=0;
+      foreach ($request->ids as $artID){
+            DB::table('detalles_solicitud_compras')
+            ->where('SolicitudCompraID',$solicitud)
+            ->where('ArticuloID',$artID)
+            ->update(['Cantidad'=>$request->cantidades[$i],'FechaResposicionEstimada'=>$request->fechas[$i]]);
+      }
+       return $this->index();
+    
+   }
 }
 

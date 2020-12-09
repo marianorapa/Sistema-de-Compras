@@ -16,6 +16,10 @@ class SolicitudesPresupuestos extends Migration
         schema::create('solicitudes_presupuestos', function(Blueprint $table){
             $table->id('SolicitudPresupuestoID');
             $table->date('FechaRegistro');
+            $table->unsignedBigInteger('AdminComprasID')->nullable();
+            $table->unsignedBiginteger('SolicitudCompraID');
+            $table->foreign('SolicitudCompraID')->references('SolicitudCompraID')->on('solicitud_compras');
+            $table->foreign('AdminComprasID')->references('id')->on('users');
         });
     }
 

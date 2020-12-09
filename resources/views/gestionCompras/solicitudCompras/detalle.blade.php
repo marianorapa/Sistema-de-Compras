@@ -8,8 +8,9 @@
   <div class="container h-auto mx-auto mt-4">
     <div class="row">
       <div class="col-4">
-        <a class="btn btn-danger" href="{{route('compras.solicitudCompras')}}" role="button">Atras</a>
-      </div>       
+          <a class="btn btn-danger" href="{{route('compras.solicitudCompras')}}" role="button">Atras</a>
+      </div>   
+     
       <div class="col-sm-4 overflow-hidden shadow-md sm:rounded-lg bg-white p-2">  
         <h3 class="text-center">Solicitud de Compra Nº: {{$solicitud}}</h3>
         <br>
@@ -19,8 +20,11 @@
       </div> 
     </div> 
   </div>
-
+  
   <div class="container h-auto sm:rounded-md shadow-md mx-auto mt-4 p-3 bg-white">
+      <div class="d-flex justify-content-center"> 
+        <a class="btn btn-primary" href="{{route('compras.solicitudCompra.editar',$solicitud)}}" role="button">Editar Detalles</a>
+      </div>
     <table id="example" class="table table-hover table-bordered" style="width:100%">
           <thead>         
               <tr class="bg-blue-50">
