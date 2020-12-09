@@ -11,6 +11,7 @@ use App\Http\Controllers\GestionArticulosController;
 use App\Http\Controllers\GestionProveedoresController;
 use App\Http\Controllers\GestionSolicitudComprasController;
 use App\Http\Livewire\UsuarioComponent;
+use App\Http\Controllers\GestionPresupuestosController;
 use App\Http\Livewire\SolicitudComprasComponent;
 
 Route::get('/', function () {
@@ -94,3 +95,8 @@ Route::post('/gestionCompras/solicitudesCompras/alta_cant_art', [GestionSolicitu
 Route::post('/gestionCompras/solicitudesCompras/registrarSolicitud', [GestionSolicitudComprasController::class,'registrarSolicitudCompra'])->name('compras.solicitudCompra.registrarSolicitudCompra');
 Route::post('/gestionCompras/solicitudesCompras/detalle', [GestionSolicitudComprasController::class,'detalle'])->name('compras.solicitudCompra.detalle');
 Route::post('/gestionCompras/solicitudesCompras/eliminar', [GestionSolicitudComprasController::class,'eliminar'])->name('compras.solicitudCompra.eliminar');
+Route::get('/gestionCompras/solicitudesCompras/{solicitud}/editarSolicitud', [GestionSolicitudComprasController::class,'editarSolicitudCompra'])->name('compras.solicitudCompra.editar');
+Route::put('/gestionCompras/solicitudesCompras/{solicitud}/actualizarSolicitud', [GestionSolicitudComprasController::class,'actualizar'])->name('compras.solicitudCompra.actualizar');
+//Gestio de Presupuestos---------------------------------------------------------------------------------------
+Route::get('/gestionCompras/presupuestos',[GestionPresupuestosController::class,'index'] )->name('compras.presupuestos');
+Route::get('/gestionCompras/presupuestos/{solicitud}/solicitar',[GestionPresupuestosController::class,'solicitarPresupuesto'] )->name('compras.presupuestos.solicitar');
