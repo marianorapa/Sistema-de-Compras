@@ -1,3 +1,8 @@
-Fecha: 28/11/2020
+Fecha: 07/12/2020
 
-. Incorporación de las funciones editar y eliminación lógica de artículos.
+. Incorporación de JavaScript con mensajes traducidos en el datatable de Solicitudes de Compras. OK
+. Ver detalle de solicitudes de compras. 
+. Eliminación física de solicitudes de compras.
+. Edición de solicitudes de compras.
+. Personas
+. Sectores
