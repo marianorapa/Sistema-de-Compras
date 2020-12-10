@@ -32,8 +32,8 @@
                   <td class="text-center" name="fecha">{{$s->FechaRegistro}}</td>            
                   <td class="text-center">                 
                   <!-- Boton trigger modal eliminar -->
-                  <a href="{{route('compras.presupuestos')}}" class="btn btn-outline-success btn-sm">Presupuestos</a>
-                  <a href="{{route('compras.presupuestos.solicitar',$s->SolicitudCompraID)}}" class="btn btn-outline-danger btn-sm">Solicitar Presupuesto</a>    
+                  <a href="{{route('compras.presupuestos')}}" class="btn btn-outline-success btn-sm">Presupuestos Registrados</a>
+                  <a href="{{route('compras.presupuestos.solicitar',$s->SolicitudCompraID)}}" class="btn btn-outline-danger btn-sm">Solicitudes de Presupuesto</a>    
                   </td>                  
               </tr>                                                     
           @endforeach                           

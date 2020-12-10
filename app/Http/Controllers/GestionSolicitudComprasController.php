@@ -160,7 +160,7 @@ class GestionSolicitudComprasController extends Controller
             ->update(['Cantidad'=>$request->cantidades[$i],'FechaResposicionEstimada'=>$request->fechas[$i]]);
       }
        return $this->index();
-    
+
    }
 }
 
