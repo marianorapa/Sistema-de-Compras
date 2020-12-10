@@ -1,39 +1,50 @@
 <x-app-layout>
 <x-slot name="header">
   <h2 class="font-bold text-xl text-blue-800 leading-tight">
-      {{ __('Presupuestos - Solicitudes de Compra Registradas') }}
+      {{ __('Solicitudes de Presupuestos') }}
   </h2>
 </x-slot>
 <div class="container h-auto mx-auto mt-2">
-  <div class="row">  
-    <div class="col-4">
-      <a class="btn btn-danger" href="{{route('gestionCompras')}}" role="button">Atras</a>
-    </div>    
-  </div> 
+  <div class="row">
+      <div class="col-4">
+        <a class="btn btn-danger" href="{{route('compras.presupuestos')}}" role="button">Atras</a>
+      </div>     
+      <div class="col-sm-4 overflow-hidden shadow-md sm:rounded-lg bg-white p-2">  
+        <h3 class="text-center">Solicitud de Compra Nº: {{$solicitud}}</h3>
+        <br>
+        <h5 class="text-grey-500">Estado: {{$estado}}</h5>
+        <h5 class="text-grey-500">Fecha de creación: {{$fecha}}</h5>
+        </div> 
+    </div> 
+
+
   <div class="container h-auto sm:rounded-md shadow-md mx-auto mt-2 p-2 bg-white">     
     @if (session('success'))
     <div class="alert alert-success" role="success">
         {{ session('success') }}
     </div> 
     @endif 
+        <div class="d-flex justify-content-center"> 
+            <a href="{{route('compras.presupuestos.solicitar',$solicitud)}}" class="btn btn-primary btn-sm">Solicitar Presupuesto</a>  
+        </div>
       <table id="example" class="table table-hover table-bordered" style="width:100%">
           <thead>         
               <tr class="bg-blue-50">           
                   <th class="text-center w-4" name="id">ID</th>                 
-                  <th class="text-center w-48" name="fecha">Fecha de Registro</th>                                 
+                  <th class="text-center w-48" name="fecha">ID Solicitud Compra</th>                                 
+                  <th class="text-center w-16">Fecha de Registro</th>  
                   <th class="text-center w-16">Acciones</th>  
               </tr>
           </thead>
           <tbody> 
-          @foreach ($solicitudes as $s)            
+          @foreach ($solpresupuestos as $s)            
               <tr>                             
-                  <input id="id" name="id" type="hidden" value="{{$s->SolicitudCompraID}}">
+                  <td class="text-center" name="idsp">{{$s->SolicitudPresupuestoID}}</td>
                   <td class="text-center" name="id">{{$s->SolicitudCompraID}}</td>
                   <td class="text-center" name="fecha">{{$s->FechaRegistro}}</td>            
                   <td class="text-center">                 
                   <!-- Boton trigger modal eliminar -->
-                  <a href="{{route('compras.presupuestos')}}" class="btn btn-outline-success btn-sm">Presupuestos Registrados</a>
-                  <a href="{{route('compras.presupuestos.solicitudes',$s->SolicitudCompraID)}}" class="btn btn-outline-danger btn-sm">Solicitudes de Presupuesto</a>    
+                  <a href="{{route('compras.presupuestos')}}" class="btn btn-outline-success btn-sm">Registrar Presupuesto</a>  
                   </td>                  
               </tr>                                                     
           @endforeach                           

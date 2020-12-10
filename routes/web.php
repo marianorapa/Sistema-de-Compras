@@ -99,4 +99,6 @@ Route::get('/gestionCompras/solicitudesCompras/{solicitud}/editarSolicitud', [Ge
 Route::put('/gestionCompras/solicitudesCompras/{solicitud}/actualizarSolicitud', [GestionSolicitudComprasController::class,'actualizar'])->name('compras.solicitudCompra.actualizar');
 //Gestio de Presupuestos---------------------------------------------------------------------------------------
 Route::get('/gestionCompras/presupuestos',[GestionPresupuestosController::class,'index'] )->name('compras.presupuestos');
+Route::get('/gestionCompras/presupuestos/{solicitud}/solicitudes',[GestionPresupuestosController::class,'solicitudesPresupuesto'] )->name('compras.presupuestos.solicitudes');
 Route::get('/gestionCompras/presupuestos/{solicitud}/solicitar',[GestionPresupuestosController::class,'solicitarPresupuesto'] )->name('compras.presupuestos.solicitar');
+Route::post('/gestionCompras/presupuestos/{solicitud}/registrarSolicitud',[GestionPresupuestosController::class,'registrarSolicitud'] )->name('compras.presupuestos.registrarSolicitud');
