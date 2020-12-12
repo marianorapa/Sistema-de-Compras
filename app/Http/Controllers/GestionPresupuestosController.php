@@ -75,11 +75,6 @@ class GestionPresupuestosController extends Controller
 
 
     public function registrarSolicitud(Request $request, $solicitud){
-<<<<<<< HEAD
-      //registrar estado=Procesado para la solicitud de Compra, además de agregar el AdminID
-      //recuperar Solicitud e ingresa el AdminID que lo reviso
-      DB::table('estados_solicitud_compras')
-=======
     //redirige a la vista de solicitudes de Presupuesto, si no existen arituclos a solicitar
      if($request->id==null){
       //aca va la alerta que indicara que no hay mas articulos a asolicitar
@@ -125,7 +120,6 @@ class GestionPresupuestosController extends Controller
   //registrar estado=Procesado para la solicitud de Compra, además de agregar el AdminID
   //recuperar Solicitud e ingresa el AdminID que lo reviso
      DB::table('estados_solicitud_compras')
->>>>>>> 04e15b169c9800bf55b4a1f7b3a52c5b66a63093
             ->where('SolicitudCompraID',$solicitud)
             ->where('EstadoID','Pendiente')
             ->update(['AdminComprasID'=>Auth::id()]);
@@ -198,7 +192,6 @@ class GestionPresupuestosController extends Controller
       return redirect()->route('compras.presupuestos');
     
     }
-<<<<<<< HEAD
 
     public function verDetalle($idSol){
       $sol = DB::table('solicitudes_presupuestos')
@@ -214,7 +207,4 @@ class GestionPresupuestosController extends Controller
       ->with('solicitud',$sol[0])
       ->with('detalle',$detalle);
     }
-
-=======
->>>>>>> 04e15b169c9800bf55b4a1f7b3a52c5b66a63093
 }

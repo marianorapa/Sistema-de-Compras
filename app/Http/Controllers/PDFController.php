@@ -18,7 +18,7 @@ class PDFController extends Controller
   
         $detalle = DB::table('deta_soli_presu')
         ->join('articulos','deta_soli_presu.ArtiID','=','articulos.ArticuloID')
-        ->where('SoliPresuID',1)->get();
+        ->where('SoliPresuID',$idSol)->get();
       
         $pdf = PDF::loadView('/gestionCompras/presupuestos/descargarDetalle',compact('detalle'));
         return $pdf->stream('detallePresupuesto.pdf');
