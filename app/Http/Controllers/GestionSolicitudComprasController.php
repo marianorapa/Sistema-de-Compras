@@ -8,7 +8,7 @@ use App\Models\Estado_Solicitud_Compras;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Validation\Rules\NotIn;
 
 class GestionSolicitudComprasController extends Controller
 {
@@ -19,11 +19,26 @@ class GestionSolicitudComprasController extends Controller
       ->with('solicitudes' ,$solicitudes);      
    } 
 
+   /**
+    * Función que retorna a la vista aquellos artículos que pueden ser seleccionados para realizar una solicitud
+    * de compra. Las condiciones para la disposicón de los artículos son: 
+    * 1 - Que el artículo este activo.
+    * 2 - Que el artículo tenga al menos un proveedor vinculado.
+    * 3 - Se debe contemplar los articulos sin repeticiones
+    */
    public function seleccionarArticulos(){
-       $solCompra = Solicitud_Compras::max('SolicitudCompraID');
-       $articulos = Articulo::all();
-       return view('/gestionCompras/solicitudCompras/seleccionarArticulos')
-       ->with('articulos' ,$articulos)
+       $solCompra = Solicitud_Compras::max('SolicitudCompraID');    
+       $articulos = DB::table('articulos')
+       ->join('articulo_proveedor','articulos.ArticuloID','=','articulo_proveedor.ArticuloID')
+       ->where('articulo_proveedor.FechaHasta',NULL)    
+       ->where('Activo',1)
+       ->get();
+
+       $unicos = $articulos->unique('ArticuloID');
+       
+      // return $unicos;
+       return view('/gestionCompras/solicitudCompras/seleccionarArticulos')       
+       ->with('articulos' ,$unicos)
        ->with('soli', $solCompra);
     }
     
@@ -68,7 +83,7 @@ class GestionSolicitudComprasController extends Controller
    public function cantidadArticulos(Request $request){
       $i=0;
       $artSolicitados=array();//Defino el array que guardara los articulos solicitados
-      //recorro los ids recuperados de la vita anterior y los voy guardando en el arry
+      //recorro los ids recuperados de la vista anterior y los voy guardando en el array
       foreach ($request->id as $articuloID){
        $artSolicitados[$i]=Articulo::find($articuloID);       
       $i++; 
@@ -109,12 +124,15 @@ class GestionSolicitudComprasController extends Controller
    }
 
    /**
-    * Función que elimina físicamente una solicitud de compra siempre que la misma se encuentre en estado PENDIENTE
+    * Función que elimina físicamente una solicitud de compra siempre que la misma se encuentre en estado PENDIENTE y
+    * el valor del id de administrador de compras sea nulo
     */
    public function eliminar(Request $request){
       $estado = DB::table('estados_solicitud_compras')
-      ->where('SolicitudCompraID',$request->id)->value('EstadoID');
-      if($estado == 'Pendiente'){   
+      ->where('SolicitudCompraID',$request->id)
+      ->where('AdminComprasIDN',NULL)->value('EstadoID');
+      if($estado == 'Pendiente')      
+      {   
          //Se elimina de la tabla estados_solicitud_compras   
          DB::table('estados_solicitud_compras')
          ->where('SolicitudCompraID',$request->id)->delete();
@@ -125,8 +143,9 @@ class GestionSolicitudComprasController extends Controller
          DB::table('solicitud_compras')
          ->where('SolicitudCompraID',$request->id)->delete(); 
          return redirect()->route('compras.solicitudCompras')->with('success','Solicitud de Compra eliminada exitosamente.');
-      }else
-         return redirect()->route('compras.solicitudCompras')->with('error','No se puede eliminar la Solicitud de Compra porque ya fue procesada.'); 
+      }
+      return redirect()->route('compras.solicitudCompras')->with('error','No se puede eliminar la Solicitud de Compra porque ya fue procesada.'); 
+   
    }
 
    public function editarSolicitudCompra($solicitud){

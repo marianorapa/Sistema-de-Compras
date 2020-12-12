@@ -42,9 +42,9 @@
                   <td class="text-center" name="idsp">{{$s->SolicitudPresupuestoID}}</td>
                   <td class="text-center" name="id">{{$s->SolicitudCompraID}}</td>
                   <td class="text-center" name="fecha">{{$s->FechaRegistro}}</td>            
-                  <td class="text-center">                 
-                  <!-- Boton trigger modal eliminar -->
-                  <a href="{{route('compras.presupuestos')}}" class="btn btn-outline-success btn-sm">Registrar Presupuesto</a>  
+                  <td class="text-center">                                 
+                    <a href="{{route('compras.presupuestos')}}" class="btn btn-outline-success btn-sm">Registrar Presupuesto</a>  
+                    <a href="{{route('compras.presupuestos.verDetalle',$s->SolicitudPresupuestoID)}}" class="btn btn-outline-danger btn-sm">Ver detalle</a>                      
                   </td>                  
               </tr>                                                     
           @endforeach                           

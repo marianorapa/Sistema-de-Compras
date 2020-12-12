@@ -12,6 +12,7 @@ use App\Http\Controllers\GestionProveedoresController;
 use App\Http\Controllers\GestionSolicitudComprasController;
 use App\Http\Livewire\UsuarioComponent;
 use App\Http\Controllers\GestionPresupuestosController;
+use App\Http\Controllers\PDFController;
 use App\Http\Livewire\SolicitudComprasComponent;
 
 Route::get('/', function () {
@@ -97,8 +98,12 @@ Route::post('/gestionCompras/solicitudesCompras/detalle', [GestionSolicitudCompr
 Route::post('/gestionCompras/solicitudesCompras/eliminar', [GestionSolicitudComprasController::class,'eliminar'])->name('compras.solicitudCompra.eliminar');
 Route::get('/gestionCompras/solicitudesCompras/{solicitud}/editarSolicitud', [GestionSolicitudComprasController::class,'editarSolicitudCompra'])->name('compras.solicitudCompra.editar');
 Route::put('/gestionCompras/solicitudesCompras/{solicitud}/actualizarSolicitud', [GestionSolicitudComprasController::class,'actualizar'])->name('compras.solicitudCompra.actualizar');
-//Gestio de Presupuestos---------------------------------------------------------------------------------------
+//Gestion de Presupuestos---------------------------------------------------------------------------------------
 Route::get('/gestionCompras/presupuestos',[GestionPresupuestosController::class,'index'] )->name('compras.presupuestos');
 Route::get('/gestionCompras/presupuestos/{solicitud}/solicitudes',[GestionPresupuestosController::class,'solicitudesPresupuesto'] )->name('compras.presupuestos.solicitudes');
 Route::get('/gestionCompras/presupuestos/{solicitud}/solicitar',[GestionPresupuestosController::class,'solicitarPresupuesto'] )->name('compras.presupuestos.solicitar');
+Route::get('/gestionCompras/presupuestos/{solicitud}/verDetalle',[GestionPresupuestosController::class,'verDetalle'] )->name('compras.presupuestos.verDetalle');
 Route::post('/gestionCompras/presupuestos/{solicitud}/registrarSolicitud',[GestionPresupuestosController::class,'registrarSolicitud'] )->name('compras.presupuestos.registrarSolicitud');
+
+//Controlador PDF
+route::get('/gestionCompras/presupuestos/{solicitud}/descargar',[PDFController::class,'PDFSolPresu'])->name('descargarSolPresuPDF');
