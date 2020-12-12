@@ -16,6 +16,7 @@ class DetallesSolicitudPresupuestos extends Migration
         schema::create('deta_soli_presu', function(Blueprint $table){
           
             $table->integer('Cantidad');
+            $table->date('FechaReposicion');
             $table->unsignedBiginteger('ArtiID');
             $table->unsignedBiginteger('SoliPresuID');
             $table->unsignedBiginteger('ProveID');

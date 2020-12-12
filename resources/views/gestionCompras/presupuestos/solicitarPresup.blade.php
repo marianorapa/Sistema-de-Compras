@@ -101,6 +101,7 @@
     var rows_selected = [];
     var prov_selected=[];
     var cant_selected=[];
+    var fp_selected=[];
 
     var table = $('#example').DataTable({  
       
@@ -126,6 +127,7 @@
         var rowId = data[1];
         var provID=data[5];
         var cantID=data[3];
+        var fpID=data[4];
 
         // If row ID is in the list of selected row IDs
         if($.inArray(rowId, rows_selected) !== -1){
@@ -142,7 +144,11 @@
           $(row).find('input[type="checkbox"]').prop('checked', true);
           $(row).addClass('selected');
         }
-
+        //copia del de arriba para array cantidades
+        if($.inArray(fpID, fp_selected) !== -1){
+          $(row).find('input[type="checkbox"]').prop('checked', true);
+          $(row).addClass('selected');
+        }
 
       }
 
@@ -160,12 +166,14 @@
       //nosotros copiamos de arriba
       var provID=data[5];
       var cantID=data[3];
+      var fpID=data[4];
 
       // Determine whether row ID is in the list of selected row IDs 
       var index = $.inArray(rowId, rows_selected);
       //nosotros copiamos de arriba
       var index2 = $.inArray(provID, prov_selected);
       var index3 = $.inArray(cantID, cant_selected);
+      var index4 = $.inArray(fpID, fp_selected);
 
       // If checkbox is checked and row ID is not in list of selected row IDs
       if(this.checked){// && index === -1){
@@ -173,12 +181,14 @@
       //nosotros copiamos de arriba
         prov_selected.push(provID);
         cant_selected.push(cantID);
+        fp_selected.push(fpID);
       // Otherwise, if checkbox is not checked and row ID is in list of selected row IDs
       }else 
       if (!this.checked && index !== -1){
         prov_selected.splice(index2, 1);
         rows_selected.splice(index, 1);
         cant_selected.splice(index3, 1);
+        fp_selected.splice(index4, 1);
       }
 
 
@@ -255,6 +265,18 @@
           );
 
         })
+
+        $.each(fp_selected, function(index4, fpID){  
+          // Create a hidden element 
+          $(form).append(
+            $('<input>')
+              .attr('type', 'hidden')
+              .attr('name', 'fps[]')
+              .val(fpID)
+          );
+
+        })
+
 
       });
 
