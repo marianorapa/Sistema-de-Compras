@@ -12,37 +12,52 @@ use Illuminate\Validation\Rules\NotIn;
 
 class GestionSolicitudComprasController extends Controller
 {
- 
+
    public function index(){
       $solicitudes = Solicitud_Compras::all();
       return view('/gestionCompras/solicitudCompras/menu')
-      ->with('solicitudes' ,$solicitudes);      
-   } 
+      ->with('solicitudes' ,$solicitudes);
+   }
 
    /**
     * Función que retorna a la vista aquellos artículos que pueden ser seleccionados para realizar una solicitud
-    * de compra. Las condiciones para la disposicón de los artículos son: 
+    * de compra. Las condiciones para la disposicón de los artículos son:
     * 1 - Que el artículo este activo.
     * 2 - Que el artículo tenga al menos un proveedor vinculado.
     * 3 - Se debe contemplar los articulos sin repeticiones
     */
    public function seleccionarArticulos(){
-       $solCompra = Solicitud_Compras::max('SolicitudCompraID');    
+       $solCompra = Solicitud_Compras::max('SolicitudCompraID');
        $articulos = DB::table('articulos')
        ->join('articulo_proveedor','articulos.ArticuloID','=','articulo_proveedor.ArticuloID')
-       ->where('articulo_proveedor.FechaHasta',NULL)    
+       ->where('articulo_proveedor.FechaHasta',NULL)
        ->where('Activo',1)
        ->get();
 
        $unicos = $articulos->unique('ArticuloID');
-       
+
       // return $unicos;
-       return view('/gestionCompras/solicitudCompras/seleccionarArticulos')       
+       return view('/gestionCompras/solicitudCompras/seleccionarArticulos')
        ->with('articulos' ,$unicos)
        ->with('soli', $solCompra);
     }
-    
+
     public function registrarSolicitudCompra(Request $request){
+
+       /*
+        * Comienzo del ejemplo de utilización permisos y roles:
+        * - Supongamos que para registrar una solicitud de compra, es necesario que el usuario tenga cierto rol:
+        *  -- Utilizamos el método helper 'authorize' que arroja una excepción si el usuario no tiene permisos
+        *  -- Es necesario que haya una 'policy' registrada (bajo app/Policies) para la clase Solicitud_Compras
+        *  -- determinando si el usuario está habilitado para la acción 'create'.
+        */
+
+        $this->authorize('create', Solicitud_Compras::class);
+
+        /*
+         * Fin del ejemplo
+         */
+
       //Se crea la Nueva Solicitud de Compra
       $sol=new Solicitud_Compras();
       $estadoSol= new Estado_Solicitud_Compras();
@@ -64,10 +79,10 @@ class GestionSolicitudComprasController extends Controller
       $estadoSol->ResponsableID=Auth::id();
 
       //Se recorren la cantidades y fecha estimadas de cada articulo solicitado
-      //y se iran dando de alta los detalles 
+      //y se iran dando de alta los detalles
       $i=0;
      foreach ($request->ids as $articuloID){
-            $detalle=new Detalle_Solicitud_Compras(); 
+            $detalle=new Detalle_Solicitud_Compras();
             $detalle->Cantidad= $request->cantidades[$i];
             $detalle->FechaResposicionEstimada= $request->fechas[$i];
             $detalle->ArticuloID=$articuloID;
@@ -85,8 +100,8 @@ class GestionSolicitudComprasController extends Controller
       $artSolicitados=array();//Defino el array que guardara los articulos solicitados
       //recorro los ids recuperados de la vista anterior y los voy guardando en el array
       foreach ($request->id as $articuloID){
-       $artSolicitados[$i]=Articulo::find($articuloID);       
-      $i++; 
+       $artSolicitados[$i]=Articulo::find($articuloID);
+      $i++;
       }
       return view('/gestionCompras/solicitudCompras/cantidadArticulos')
       ->with('articulos' ,$artSolicitados);
@@ -96,18 +111,18 @@ class GestionSolicitudComprasController extends Controller
     * Función que recupera el detalle de una solicitud de compra particular y retorna la información
     * a la vista correspondiente para su visualización.
     */
-   public function detalle(Request $request){      
+   public function detalle(Request $request){
       $solicitud = $request->id;
-      
+
       $fecha = DB::table('solicitud_compras')
-      ->where('SolicitudCompraID',$request->id)->value('FechaRegistro');      
+      ->where('SolicitudCompraID',$request->id)->value('FechaRegistro');
 
       $estado = DB::table('estados_solicitud_compras')
       ->where('SolicitudCompraID',$request->id)->value('EstadoID');
-      
+
       $usuarioID = DB::table('estados_solicitud_compras')
       ->where('SolicitudCompraID',$request->id)->value('ResponsableID');
-      
+
       $usuario = DB::table('users')
       ->where('id',$usuarioID)->value('name');
 
@@ -131,9 +146,9 @@ class GestionSolicitudComprasController extends Controller
       $estado = DB::table('estados_solicitud_compras')
       ->where('SolicitudCompraID',$request->id)
       ->where('AdminComprasIDN',NULL)->value('EstadoID');
-      if($estado == 'Pendiente')      
-      {   
-         //Se elimina de la tabla estados_solicitud_compras   
+      if($estado == 'Pendiente')
+      {
+         //Se elimina de la tabla estados_solicitud_compras
          DB::table('estados_solicitud_compras')
          ->where('SolicitudCompraID',$request->id)->delete();
          //Se elimina de la tabla detalles
@@ -141,21 +156,21 @@ class GestionSolicitudComprasController extends Controller
          ->where('SolicitudCompraID',$request->id)->delete();
          //Por último se elimina la solicitud de la tabla solicitudes
          DB::table('solicitud_compras')
-         ->where('SolicitudCompraID',$request->id)->delete(); 
+         ->where('SolicitudCompraID',$request->id)->delete();
          return redirect()->route('compras.solicitudCompras')->with('success','Solicitud de Compra eliminada exitosamente.');
       }
-      return redirect()->route('compras.solicitudCompras')->with('error','No se puede eliminar la Solicitud de Compra porque ya fue procesada.'); 
-   
+      return redirect()->route('compras.solicitudCompras')->with('error','No se puede eliminar la Solicitud de Compra porque ya fue procesada.');
+
    }
 
    public function editarSolicitudCompra($solicitud){
-      
+
       $fecha = DB::table('solicitud_compras')
-      ->where('SolicitudCompraID',$solicitud)->value('FechaRegistro');      
+      ->where('SolicitudCompraID',$solicitud)->value('FechaRegistro');
 
       $estado = DB::table('estados_solicitud_compras')
       ->where('SolicitudCompraID',$solicitud)->value('EstadoID');
-      
+
       $usuarioID = DB::table('estados_solicitud_compras')
       ->where('SolicitudCompraID',$solicitud)->value('ResponsableID');
 

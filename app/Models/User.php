@@ -33,6 +33,14 @@ class User extends Authenticatable
     ];
 
     /**
+     * Método agregado para ejemplo permisos y roles
+     */
+    public function isAdminCompras() {
+        return $this->RolID == '1';
+    }
+
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
